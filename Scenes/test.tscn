@@ -1,0 +1,36 @@
+[gd_scene load_steps=8 format=3 uid="uid://7ijkhnchf7ja"]
+
+[ext_resource type="PackedScene" uid="uid://dqbg4b32kyjx7" path="res://Prefab/character.tscn" id="1_71qv7"]
+[ext_resource type="Script" path="res://Scripts/Controller.gd" id="1_vb8a6"]
+[ext_resource type="Material" uid="uid://b30nyv8fik6a3" path="res://Materials/Prototype/material_prototype.tres" id="2_2t20c"]
+[ext_resource type="Script" path="res://Scripts/Character.gd" id="3_0ms43"]
+[ext_resource type="Script" path="res://Scripts/Camera.gd" id="4_nxde1"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_4d8yh"]
+size = Vector3(25, 0.5, 25)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_mnf1w"]
+points = PackedVector3Array(-12.5, -0.25, -12.5, -12.5, 0.25, -12.5, 12.5, -0.25, -12.5, -12.5, -0.25, 12.5, -12.5, 0.25, 12.5, 12.5, 0.25, -12.5, 12.5, -0.25, 12.5, 12.5, 0.25, 12.5)
+
+[node name="Node3D" type="Node3D"]
+
+[node name="Controller" type="Node3D" parent="."]
+script = ExtResource("1_vb8a6")
+
+[node name="Character" parent="." instance=ExtResource("1_71qv7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0)
+script = ExtResource("3_0ms43")
+
+[node name="Camera" type="SpringArm3D" parent="."]
+script = ExtResource("4_nxde1")
+
+[node name="Camera3D" type="Camera3D" parent="Camera"]
+
+[node name="Floor" type="StaticBody3D" parent="."]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Floor"]
+material_override = ExtResource("2_2t20c")
+mesh = SubResource("BoxMesh_4d8yh")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor"]
+shape = SubResource("ConvexPolygonShape3D_mnf1w")
