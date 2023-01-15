@@ -1,10 +1,25 @@
-[gd_scene load_steps=8 format=3 uid="uid://7ijkhnchf7ja"]
+[gd_scene load_steps=11 format=3 uid="uid://7ijkhnchf7ja"]
 
 [ext_resource type="PackedScene" uid="uid://dqbg4b32kyjx7" path="res://Prefab/character.tscn" id="1_71qv7"]
 [ext_resource type="Script" path="res://Scripts/Controller.gd" id="1_vb8a6"]
 [ext_resource type="Material" uid="uid://b30nyv8fik6a3" path="res://Materials/Prototype/material_prototype.tres" id="2_2t20c"]
 [ext_resource type="Script" path="res://Scripts/Character.gd" id="3_0ms43"]
-[ext_resource type="Script" path="res://Scripts/Camera.gd" id="4_nxde1"]
+[ext_resource type="PackedScene" uid="uid://dufv3576nm313" path="res://Prefab/camera.tscn" id="4_g45id"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_xc4vq"]
+sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+
+[sub_resource type="Sky" id="Sky_xnv3u"]
+sky_material = SubResource("ProceduralSkyMaterial_xc4vq")
+
+[sub_resource type="Environment" id="Environment_cp6nh"]
+background_mode = 2
+sky = SubResource("Sky_xnv3u")
+tonemap_mode = 2
+ssao_enabled = true
+sdfgi_enabled = true
+glow_enabled = true
 
 [sub_resource type="BoxMesh" id="BoxMesh_4d8yh"]
 size = Vector3(25, 0.5, 25)
@@ -14,17 +29,25 @@ points = PackedVector3Array(-12.5, -0.25, -12.5, -12.5, 0.25, -12.5, 12.5, -0.25
 
 [node name="Node3D" type="Node3D"]
 
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_cp6nh")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, 0, 0, 0)
+shadow_enabled = true
+
 [node name="Controller" type="Node3D" parent="."]
 script = ExtResource("1_vb8a6")
 
-[node name="Character" parent="." instance=ExtResource("1_71qv7")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0)
+[node name="Character_A" parent="." instance=ExtResource("1_71qv7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0.25, 0)
 script = ExtResource("3_0ms43")
 
-[node name="Camera" type="SpringArm3D" parent="."]
-script = ExtResource("4_nxde1")
+[node name="Character_B" parent="." instance=ExtResource("1_71qv7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 0.25, 0)
+script = ExtResource("3_0ms43")
 
-[node name="Camera3D" type="Camera3D" parent="Camera"]
+[node name="Camera" parent="." instance=ExtResource("4_g45id")]
 
 [node name="Floor" type="StaticBody3D" parent="."]
 
