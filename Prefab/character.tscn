@@ -1,29 +1,33 @@
 [gd_scene load_steps=4 format=3 uid="uid://dqbg4b32kyjx7"]
 
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_kj4po"]
-
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_mapii"]
 radius = 0.35
 height = 1.8
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_kj4po"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_rufeg"]
 radius = 0.125
 height = 0.75
 
 [node name="Character" type="CharacterBody3D" groups=["Character"]]
+collision_layer = 2
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-mesh = SubResource("CapsuleMesh_kj4po")
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
+agent_height_offset = 0.4
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 shape = SubResource("CapsuleShape3D_mapii")
 
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+[node name="Temp_Body" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+mesh = SubResource("CapsuleMesh_kj4po")
+
+[node name="Temp_Arm_01" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 1.1, 0)
 mesh = SubResource("CapsuleMesh_rufeg")
 
-[node name="MeshInstance3D3" type="MeshInstance3D" parent="."]
+[node name="Temp_Arm_02" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 1.1, 0)
 mesh = SubResource("CapsuleMesh_rufeg")
