@@ -50,6 +50,9 @@ func _input(event):
 	
 	if event.is_action_pressed("character_command"):
 		update_nav_destination()
+	
+	if event.is_action_pressed("character_action"):
+		character_skill()
 
 
 func input_poll():
@@ -85,9 +88,19 @@ func update_player():
 
 func update_nav_destination():
 	var new_destination = camera.get_position_from_raycast()
-	print(new_destination)
+	# print(new_destination)
 	if new_destination != null:
 		other_character.set_new_nav_destination(new_destination)
+
+
+func character_skill():
+	match current_character.character_skill:
+		PlayerCharacter.CHARACTER_SKILL.GROW:
+			print("Growing")
+			current_character.grow_character()
+		PlayerCharacter.CHARACTER_SKILL.DIVIDE:
+			print("Dividing")
+			current_character.divide_character()
 
 
 # Camera Functions----------------------------------------------------------------------------------

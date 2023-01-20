@@ -52,10 +52,12 @@ script = ExtResource("1_vb8a6")
 [node name="Character_A" parent="." instance=ExtResource("1_71qv7")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0.25, 0)
 script = ExtResource("3_0ms43")
+character_skill = 0
 
 [node name="Character_B" parent="." instance=ExtResource("1_71qv7")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 0.25, 0)
 script = ExtResource("3_0ms43")
+character_skill = 1
 
 [node name="Camera" parent="." instance=ExtResource("4_g45id")]
 collision_mask = 1
