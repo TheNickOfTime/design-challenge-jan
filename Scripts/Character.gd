@@ -6,9 +6,13 @@ const SPEED = 5.0
 const JUMP_VELOCITY = 4.5
 
 enum CONTROL_STATE {Input, Navigation}
+enum CHARACTER_SKILL {GROW, DIVIDE}
 
 # On Ready Vars-------------------------------------------------------------------------------------
 @onready var nav_agent : NavigationAgent3D = $NavigationAgent3D
+
+# Export Vars---------------------------------------------------------------------------------------
+@export var character_skill : CHARACTER_SKILL
 
 # Member Vars---------------------------------------------------------------------------------------
 var control_state : CONTROL_STATE
@@ -72,9 +76,20 @@ func move_nav():
 
 func rotate_character(delta : float):
 	rotate_y(rotate_direction.x * -0.25 * delta)
-	print(rotation)
+	# print(rotation)
 
 
 func set_new_nav_destination(new_destination : Vector3):
 	nav_destination = new_destination
 	nav_agent.set_target_location(new_destination)
+
+
+func divide_character():
+	var change_scale : Tween = get_tree().create_tween()
+	change_scale.tween_property(self, "scale", Vector3(0.5, 0.5, 0.5), 0.5)
+
+
+func grow_character():
+	var change_scale : Tween = get_tree().create_tween()
+	change_scale.tween_property(self, "scale", Vector3(1, 2, 1), 0.5)
+	pass
