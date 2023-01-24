@@ -1,10 +1,10 @@
-[gd_scene load_steps=14 format=3 uid="uid://7ijkhnchf7ja"]
+[gd_scene load_steps=14 format=3 uid="uid://caia03dpjg3b5"]
 
-[ext_resource type="PackedScene" uid="uid://dqbg4b32kyjx7" path="res://Prefab/character.tscn" id="1_71qv7"]
 [ext_resource type="Script" path="res://Scripts/Controller.gd" id="1_vb8a6"]
 [ext_resource type="Material" uid="uid://b30nyv8fik6a3" path="res://Materials/Prototype/material_prototype.tres" id="2_2t20c"]
-[ext_resource type="Script" path="res://Scripts/Character.gd" id="3_0ms43"]
 [ext_resource type="PackedScene" uid="uid://dufv3576nm313" path="res://Prefab/camera.tscn" id="4_g45id"]
+[ext_resource type="PackedScene" uid="uid://b0tvkt6nbtkno" path="res://Prefab/character_divide.tscn" id="4_lx8or"]
+[ext_resource type="PackedScene" uid="uid://cm8pv24m2fom8" path="res://Prefab/character_grow.tscn" id="5_cnkjf"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_xc4vq"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -49,16 +49,6 @@ shadow_enabled = true
 [node name="Controller" type="Node3D" parent="."]
 script = ExtResource("1_vb8a6")
 
-[node name="Character_A" parent="." instance=ExtResource("1_71qv7")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0.25, 0)
-script = ExtResource("3_0ms43")
-character_skill = 0
-
-[node name="Character_B" parent="." instance=ExtResource("1_71qv7")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 0.25, 0)
-script = ExtResource("3_0ms43")
-character_skill = 1
-
 [node name="Camera" parent="." instance=ExtResource("4_g45id")]
 collision_mask = 1
 
@@ -99,3 +89,9 @@ offset_right = 2.0
 offset_bottom = 2.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="Character_Grow" parent="." instance=ExtResource("5_cnkjf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.58836, 0.25, 0.0900323)
+
+[node name="Character_Divide" parent="." instance=ExtResource("4_lx8or")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.19672, 0.250001, -0.0451247)

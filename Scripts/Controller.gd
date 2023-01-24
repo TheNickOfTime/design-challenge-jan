@@ -53,6 +53,9 @@ func _input(event):
 	
 	if event.is_action_pressed("character_action"):
 		character_skill()
+	
+	if event.is_action_pressed("character_action_alt"):
+		character_skill_alt()
 
 
 func input_poll():
@@ -98,6 +101,17 @@ func character_skill():
 		PlayerCharacter.CHARACTER_SKILL.GROW:
 			print("Growing")
 			current_character.grow_character()
+			# current_character.flatten_character()
+		PlayerCharacter.CHARACTER_SKILL.DIVIDE:
+			print("Dividing")
+			current_character.divide_character()
+
+func character_skill_alt():
+	match current_character.character_skill:
+		PlayerCharacter.CHARACTER_SKILL.GROW:
+			print("Growing")
+			# current_character.grow_character()
+			current_character.flatten_character()
 		PlayerCharacter.CHARACTER_SKILL.DIVIDE:
 			print("Dividing")
 			current_character.divide_character()
