@@ -1,4 +1,6 @@
-[gd_scene load_steps=4 format=3 uid="uid://dqbg4b32kyjx7"]
+[gd_scene load_steps=5 format=3 uid="uid://d15eqordyufmf"]
+
+[ext_resource type="Script" path="res://Scripts/Character.gd" id="1_q0qgr"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_mapii"]
 radius = 0.35
@@ -8,10 +10,11 @@ height = 1.8
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_rufeg"]
 radius = 0.125
-height = 0.75
+height = 0.5
 
 [node name="Character" type="CharacterBody3D" groups=["Character"]]
 collision_layer = 2
+script = ExtResource("1_q0qgr")
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
 agent_height_offset = 0.4
@@ -24,10 +27,12 @@ shape = SubResource("CapsuleShape3D_mapii")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 mesh = SubResource("CapsuleMesh_kj4po")
 
-[node name="Temp_Arm_01" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 1.1, 0)
+[node name="Temp_Arm_01" type="MeshInstance3D" parent="Temp_Body"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0, 0)
 mesh = SubResource("CapsuleMesh_rufeg")
+skeleton = NodePath("../..")
 
-[node name="Temp_Arm_02" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 1.1, 0)
+[node name="Temp_Arm_02" type="MeshInstance3D" parent="Temp_Body"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0, 0)
 mesh = SubResource("CapsuleMesh_rufeg")
+skeleton = NodePath("../..")

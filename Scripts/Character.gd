@@ -6,16 +6,20 @@ const SPEED = 5.0
 const JUMP_VELOCITY = 4.5
 
 enum CONTROL_STATE {Input, Navigation}
-enum CHARACTER_SKILL {GROW, DIVIDE}
+enum CHARACTER_SKILL {NONE, GROW, DIVIDE}
 
 # On Ready Vars-------------------------------------------------------------------------------------
 @onready var nav_agent : NavigationAgent3D = $NavigationAgent3D
 
 # Export Vars---------------------------------------------------------------------------------------
 @export var character_skill : CHARACTER_SKILL
+@export var base_character : PackedScene
+@export var preview_character : PackedScene
 
 # Member Vars---------------------------------------------------------------------------------------
 var control_state : CONTROL_STATE
+var is_skill_on : bool
+var split_character : Node3D
 
 var move_direction : Vector2
 var move_speed : float = 5.0
@@ -43,6 +47,11 @@ func _physics_process(delta):
 			move_input(move_direction)
 		CONTROL_STATE.Navigation:
 			move_nav()
+
+
+# Connected Signals---------------------------------------------------------------------------------
+func _on_preview_character_spawned_character(spawned_character : Node3D):
+	split_character = spawned_character
 
 
 # Input Movement Functions--------------------------------------------------------------------------
@@ -86,10 +95,57 @@ func set_new_nav_destination(new_destination : Vector3):
 
 func divide_character():
 	var change_scale : Tween = get_tree().create_tween()
-	change_scale.tween_property(self, "scale", Vector3(0.5, 0.5, 0.5), 0.5)
+	
+	if !is_skill_on:
+		change_scale.tween_property(self, "scale", Vector3(0.75, 0.75, 0.75), 0.25)
+		await change_scale.finished
+		var preview = preview_character.instantiate()
+		preview.transform = transform
+		get_tree().root.add_child(preview)
+		preview.spawned_character.connect(_on_preview_character_spawned_character)
+	else:
+		change_scale.tween_property(self, "scale", Vector3(1.0, 1.0, 1.0), 0.25)
+		split_character.queue_free()
+	
+	is_skill_on = !is_skill_on
 
 
 func grow_character():
 	var change_scale : Tween = get_tree().create_tween()
-	change_scale.tween_property(self, "scale", Vector3(1, 2, 1), 0.5)
-	pass
+	var change_offset : Tween = get_tree().create_tween()
+
+	if !is_skill_on:
+		change_scale.tween_property($Temp_Body, "mesh:size", Vector3(0.5, 3, 0.5), 0.25)
+		change_offset.tween_property($Temp_Body, "position:y", 1.5, 0.25)
+	else:
+		change_scale.tween_property($Temp_Body, "mesh:size", Vector3(0.75, 2, 0.75), 0.25)
+		change_offset.tween_property($Temp_Body, "position:y", 1.0, 0.25)
+	
+	is_skill_on = !is_skill_on
+
+func flatten_character():
+	var change_scale : Tween = get_tree().create_tween()
+	var change_offset : Tween = get_tree().create_tween()
+
+	if !is_skill_on:
+		change_scale.tween_property($Temp_Body, "mesh:size", Vector3(2, 1, 2), 0.25)
+		change_offset.tween_property($Temp_Body, "position:y", 0.5, 0.25)
+	else:
+		change_scale.tween_property($Temp_Body, "mesh:size", Vector3(0.75, 2, 0.75), 0.25)
+		change_offset.tween_property($Temp_Body, "position:y", 1.0, 0.25)
+	
+	is_skill_on = !is_skill_on
+
+
+# func shrink_character():
+# 	var change_scale : Tween = get_tree().create_tween()
+# 	var change_offset : Tween = get_tree().create_tween()
+	
+# 	if !is_skill_on:
+# 		change_scale.tween_property($Temp_Body, "mesh:height", 1.0, 0.25)
+# 		change_offset.tween_property($Temp_Body, "position:y", 0.5, 0.25)
+# 	else:
+# 		change_scale.tween_property($Temp_Body, "mesh:height", 2.0, 0.25)
+# 		change_offset.tween_property($Temp_Body, "position:y", 1.0, 0.25)
+	
+# 	is_skill_on = !is_skill_on

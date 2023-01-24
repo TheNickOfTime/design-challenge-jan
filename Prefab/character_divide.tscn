@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://b0tvkt6nbtkno"]
+
+[ext_resource type="PackedScene" uid="uid://d15eqordyufmf" path="res://Prefab/character.tscn" id="1_brbtm"]
+[ext_resource type="PackedScene" uid="uid://boeu788k7qod5" path="res://Prefab/preview_character.tscn" id="2_tjubp"]
+
+[node name="Character_Divide" instance=ExtResource("1_brbtm")]
+character_skill = 2
+base_character = ExtResource("1_brbtm")
+preview_character = ExtResource("2_tjubp")
