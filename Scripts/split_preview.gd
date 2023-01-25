@@ -6,12 +6,17 @@ signal spawned_character(character : Node)
 
 
 func _on_body_exited(body:Node3D):
-    if body.is_in_group("Character"):
-        spawn_character()
+	if body.is_in_group("Character"):
+		spawn_character()
 
 func spawn_character():
-    var new_character = base_character.instantiate()
-    new_character.transform = transform
-    get_tree().root.add_child(new_character)
-    spawned_character.emit(new_character)
-    queue_free()
+	var new_character = base_character.instantiate()
+	new_character.transform = transform
+	$StaticBody3D.queue_free()
+
+	await get_tree().process_frame
+
+	get_tree().root.add_child(new_character)
+	spawned_character.emit(new_character)
+	print("Spawned real character")
+	queue_free()

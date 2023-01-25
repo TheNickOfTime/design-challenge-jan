@@ -1,6 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://cm8pv24m2fom8"]
+[gd_scene load_steps=6 format=3 uid="uid://cm8pv24m2fom8"]
 
 [ext_resource type="PackedScene" uid="uid://d15eqordyufmf" path="res://Prefab/character.tscn" id="1_6fgee"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_bdqos"]
+size = Vector3(0.75, 2, 0.75)
 
 [sub_resource type="BoxMesh" id="BoxMesh_051oi"]
 size = Vector3(0.75, 2, 0.75)
@@ -13,6 +16,9 @@ size = Vector3(0.25, 0.5, 0.25)
 
 [node name="Character_Grow" instance=ExtResource("1_6fgee")]
 character_skill = 1
+
+[node name="CollisionShape3D" parent="." index="1"]
+shape = SubResource("BoxShape3D_bdqos")
 
 [node name="Temp_Body" parent="." index="2"]
 mesh = SubResource("BoxMesh_051oi")

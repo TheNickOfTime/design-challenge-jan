@@ -14,6 +14,7 @@ enum CHARACTER_SKILL {NONE, GROW, DIVIDE}
 # Export Vars---------------------------------------------------------------------------------------
 @export var character_skill : CHARACTER_SKILL
 @export var base_character : PackedScene
+@export var decoy_character : PackedScene
 @export var preview_character : PackedScene
 
 # Member Vars---------------------------------------------------------------------------------------
@@ -27,6 +28,8 @@ var rotate_speed : float = 1
 var rotate_direction : Vector2
 
 var nav_destination : Vector3
+
+var can_move : bool = true
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
@@ -56,6 +59,8 @@ func _on_preview_character_spawned_character(spawned_character : Node3D):
 
 # Input Movement Functions--------------------------------------------------------------------------
 func move_input(direction : Vector2):
+	if !can_move: return
+
 	var new_direction = (transform.basis * Vector3(direction.x, 0, direction.y)).normalized()
 	if new_direction:
 		velocity.x = new_direction.x * SPEED
@@ -94,20 +99,58 @@ func set_new_nav_destination(new_destination : Vector3):
 
 
 func divide_character():
-	var change_scale : Tween = get_tree().create_tween()
+	# var change_radius : Tween = get_tree().create_tween()
+	# var change_height : Tween = get_tree().create_tween()
+	# var change_offset : Tween = get_tree().create_tween()
 	
 	if !is_skill_on:
-		change_scale.tween_property(self, "scale", Vector3(0.75, 0.75, 0.75), 0.25)
-		await change_scale.finished
-		var preview = preview_character.instantiate()
-		preview.transform = transform
-		get_tree().root.add_child(preview)
-		preview.spawned_character.connect(_on_preview_character_spawned_character)
+		can_move = false
+
+		# Store initial transform
+		var starting_trans : Transform3D = transform
+		var starting_pos : Vector3 = position
+
+		# Spawn decoy body to cover up transitions
+		var decoy_body = decoy_character.instantiate()
+		decoy_body.transform = starting_trans
+		get_parent().add_child(decoy_body)
+
+		# Move original character up
+		$Temp_Body.mesh.height = 1.0
+		$Temp_Body.position.y = 0.5
+		$CollisionShape3D.shape.height = 1.0
+		$CollisionShape3D.position.y = 0.5
+		
+		var tween = get_tree().create_tween()
+		tween.tween_property(self, "position", position + Vector3.UP, 0.25)
+		await tween.finished
+
+		# Spawn dummy character
+		var dummy_character = preview_character.instantiate()
+		dummy_character.position = starting_pos
+		get_parent().add_child(dummy_character)
+		dummy_character.spawned_character.connect(_on_preview_character_spawned_character)
+
+		tween = get_tree().create_tween()
+		tween.tween_property(decoy_body, "scale", Vector3.ZERO, 0.25)
+		await tween.finished
+		decoy_body.queue_free()
+		
+		can_move = true
 	else:
-		change_scale.tween_property(self, "scale", Vector3(1.0, 1.0, 1.0), 0.25)
+		var change_height : Tween = get_tree().create_tween()
+		var change_offset : Tween = get_tree().create_tween()
+		var change_dummy_scale : Tween = get_tree().create_tween()
+		change_height.tween_property($Temp_Body, "mesh:height", 2.0, 0.25)
+		change_offset.tween_property($Temp_Body, "position:y", 1.0, 0.25)
+		change_dummy_scale.tween_property(split_character, "scale", Vector3.ZERO, 0.25)
+		await change_dummy_scale.finished
 		split_character.queue_free()
 	
 	is_skill_on = !is_skill_on
+
+func rejoin_character():
+	pass
 
 
 func grow_character():
