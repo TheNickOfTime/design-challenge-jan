@@ -51,11 +51,11 @@ func _input(event):
 	if event.is_action_pressed("character_command"):
 		update_nav_destination()
 	
-	if event.is_action_pressed("character_action"):
-		character_skill()
+	if event.is_action_pressed("skill_primary"):
+		character_skill_primary()
 	
-	if event.is_action_pressed("character_action_alt"):
-		character_skill_alt()
+	if event.is_action_pressed("skill_secondary"):
+		character_skill_secondary()
 
 
 func input_poll():
@@ -96,21 +96,19 @@ func update_nav_destination():
 		other_character.set_new_nav_destination(new_destination)
 
 
-func character_skill():
+func character_skill_primary():
 	match current_character.character_skill:
 		PlayerCharacter.CHARACTER_SKILL.GROW:
 			print("Growing")
 			current_character.grow_character()
-			# current_character.flatten_character()
 		PlayerCharacter.CHARACTER_SKILL.DIVIDE:
 			print("Dividing")
 			current_character.divide_character()
 
-func character_skill_alt():
+func character_skill_secondary():
 	match current_character.character_skill:
 		PlayerCharacter.CHARACTER_SKILL.GROW:
-			print("Growing")
-			# current_character.grow_character()
+			print("Flattening")
 			current_character.flatten_character()
 		PlayerCharacter.CHARACTER_SKILL.DIVIDE:
 			print("Dividing")

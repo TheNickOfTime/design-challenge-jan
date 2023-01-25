@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://bp56fqwnike6l"]
+
+[ext_resource type="PackedScene" uid="uid://d15eqordyufmf" path="res://Prefab/character.tscn" id="1_82458"]
+
+[node name="Character" instance=ExtResource("1_82458")]
+
+[node name="CollisionShape3D" parent="." index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+
+[node name="Temp_Body" parent="." index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)

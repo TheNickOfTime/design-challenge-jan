@@ -24,8 +24,9 @@ func _process(delta):
 
 
 func follow_camera(delta : float):
-	position = character.position + offset
-
+	# position = character.position + offset
+	var target_position : Vector3 = character.position + offset
+	position = position.lerp(target_position, delta * 7.5)
 
 
 func rotate_camera(delta : float):

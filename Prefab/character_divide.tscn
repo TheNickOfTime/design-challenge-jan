@@ -1,9 +1,11 @@
-[gd_scene load_steps=3 format=3 uid="uid://b0tvkt6nbtkno"]
+[gd_scene load_steps=4 format=3 uid="uid://dg17faj88yxbf"]
 
 [ext_resource type="PackedScene" uid="uid://d15eqordyufmf" path="res://Prefab/character.tscn" id="1_brbtm"]
-[ext_resource type="PackedScene" uid="uid://boeu788k7qod5" path="res://Prefab/preview_character.tscn" id="2_tjubp"]
+[ext_resource type="PackedScene" uid="uid://camjrakssyc5r" path="res://Prefab/decoy_character.tscn" id="2_nw50r"]
+[ext_resource type="PackedScene" uid="uid://c450ukmygr4fq" path="res://Prefab/dummy_character.tscn" id="3_qdq2u"]
 
 [node name="Character_Divide" instance=ExtResource("1_brbtm")]
 character_skill = 2
 base_character = ExtResource("1_brbtm")
-preview_character = ExtResource("2_tjubp")
+decoy_character = ExtResource("2_nw50r")
+preview_character = ExtResource("3_qdq2u")
