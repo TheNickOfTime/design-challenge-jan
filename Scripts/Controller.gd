@@ -9,6 +9,9 @@ var character_index : int = 0
 var move_direction : Vector2 = Vector2.ZERO
 var look_direction : Vector2 = Vector2.ZERO
 
+var can_move_character : bool = false
+var can_move_camera : bool = false
+
 var current_character: PlayerCharacter:
 	get:
 		return characters[character_index] as PlayerCharacter
@@ -30,36 +33,46 @@ func _ready():
 	setup_player()
 	setup_camera()
 
+	await get_tree().process_frame
+
+	can_move_character = true
+	can_move_camera = true
+
 
 func _process(delta):
+	
 	input_poll()
 	update_camera()
 	update_player()
+
 	look_direction = Vector2.ZERO
 
 
 func _input(event):
-	if event.is_action_pressed("character_switch"):
-		switch_character()
-	
-	if event is InputEventMouseMotion:
-			look_direction = event.relative
-	
 	if event.is_action_pressed("ui_cancel"):
 		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+
+	if can_move_character:
+		if event.is_action_pressed("character_switch"):
+			switch_character()
+		
+		if event.is_action_pressed("character_command"):
+			update_nav_destination()
+		
+		if event.is_action_pressed("skill_primary"):
+			character_skill_primary()
+		
+		if event.is_action_pressed("skill_secondary"):
+			character_skill_secondary()
 	
-	if event.is_action_pressed("character_command"):
-		update_nav_destination()
-	
-	if event.is_action_pressed("skill_primary"):
-		character_skill_primary()
-	
-	if event.is_action_pressed("skill_secondary"):
-		character_skill_secondary()
+	if can_move_camera:
+		if event is InputEventMouseMotion:
+			look_direction = event.relative
 
 
 func input_poll():
-	move_direction = Input.get_vector("move_left", "move_right", "move_forward", "move_back")
+	if can_move_character:
+		move_direction = Input.get_vector("move_left", "move_right", "move_forward", "move_back")
 
 
 # Character Functions-------------------------------------------------------------------------------
@@ -78,10 +91,10 @@ func setup_player():
 		character = character as PlayerCharacter
 		
 		if character == current_character:
-			character.control_state = PlayerCharacter.CONTROL_STATE.Input
+			character.control_state = PlayerCharacter.CONTROL_STATE.INPUT
 		else:
 			character.nav_destination = character.position
-			character.control_state = PlayerCharacter.CONTROL_STATE.Navigation
+			character.control_state = PlayerCharacter.CONTROL_STATE.NONE
 
 
 func update_player():
@@ -112,7 +125,7 @@ func character_skill_secondary():
 			current_character.flatten_character()
 		PlayerCharacter.CHARACTER_SKILL.DIVIDE:
 			print("Dividing")
-			current_character.divide_character()
+			current_character.command_twin(camera.get_position_from_raycast())
 
 
 # Camera Functions----------------------------------------------------------------------------------
