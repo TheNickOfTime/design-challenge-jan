@@ -5,7 +5,7 @@ class_name PlayerCharacter
 const SPEED = 5.0
 const JUMP_VELOCITY = 4.5
 
-enum CONTROL_STATE {Input, Navigation}
+enum CONTROL_STATE {NONE, INPUT, NAVIGATION}
 enum CHARACTER_SKILL {NONE, GROW, DIVIDE}
 
 # On Ready Vars-------------------------------------------------------------------------------------
@@ -46,20 +46,24 @@ func _physics_process(delta):
 		velocity.y -= gravity * delta
 	
 	match control_state:
-		CONTROL_STATE.Input:
+		CONTROL_STATE.NONE:
+			velocity = Vector3.ZERO
+			move_and_slide()
+		CONTROL_STATE.INPUT:
 			move_input(move_direction)
-		CONTROL_STATE.Navigation:
+		CONTROL_STATE.NAVIGATION:
 			move_nav()
 
 
 # Connected Signals---------------------------------------------------------------------------------
 func _on_preview_character_spawned_character(spawned_character : Node3D):
 	split_character = spawned_character
+	split_character.control_state = PlayerCharacter.CONTROL_STATE.NAVIGATION
 
 
-# Input Movement Functions--------------------------------------------------------------------------
+# INPUT Movement Functions--------------------------------------------------------------------------
 func move_input(direction : Vector2):
-	if !can_move: return
+	# if !can_move: return
 
 	var new_direction = (transform.basis * Vector3(direction.x, 0, direction.y)).normalized()
 	if new_direction:
@@ -98,6 +102,7 @@ func set_new_nav_destination(new_destination : Vector3):
 	nav_agent.set_target_location(new_destination)
 
 
+# Divide Character Funcs----------------------------------------------------------------------------
 func divide_character():
 	# var change_radius : Tween = get_tree().create_tween()
 	# var change_height : Tween = get_tree().create_tween()
@@ -137,7 +142,8 @@ func divide_character():
 		decoy_body.queue_free()
 		
 		can_move = true
-	else:
+		is_skill_on = true
+	elif split_character != null:
 		var change_height : Tween = get_tree().create_tween()
 		var change_offset : Tween = get_tree().create_tween()
 		var change_dummy_scale : Tween = get_tree().create_tween()
@@ -146,13 +152,16 @@ func divide_character():
 		change_dummy_scale.tween_property(split_character, "scale", Vector3.ZERO, 0.25)
 		await change_dummy_scale.finished
 		split_character.queue_free()
-	
-	is_skill_on = !is_skill_on
+		is_skill_on = false
 
-func rejoin_character():
-	pass
+func command_twin(destination : Vector3):
+	if is_skill_on and split_character != null:
+		(split_character as PlayerCharacter).set_new_nav_destination(destination)
+	else:
+		pass
 
 
+# Grow Character Funcs------------------------------------------------------------------------------
 func grow_character():
 	var change_scale : Tween = get_tree().create_tween()
 	var change_offset : Tween = get_tree().create_tween()
@@ -160,9 +169,17 @@ func grow_character():
 	if !is_skill_on:
 		change_scale.tween_property($Temp_Body, "mesh:size", Vector3(0.5, 3, 0.5), 0.25)
 		change_offset.tween_property($Temp_Body, "position:y", 1.5, 0.25)
+
+		change_scale = get_tree().create_tween()
+		change_scale.tween_property($CollisionShape3D, "shape:size", Vector3(0.5, 3, 0.5), 0.25)
+		change_offset.tween_property($CollisionShape3D, "position:y", 1.5, 0.25)
 	else:
 		change_scale.tween_property($Temp_Body, "mesh:size", Vector3(0.75, 2, 0.75), 0.25)
 		change_offset.tween_property($Temp_Body, "position:y", 1.0, 0.25)
+
+		change_scale = get_tree().create_tween()
+		change_scale.tween_property($CollisionShape3D, "shape:size", Vector3(0.75, 2, 0.75), 0.25)
+		change_offset.tween_property($CollisionShape3D, "position:y", 1.0, 0.25)
 	
 	is_skill_on = !is_skill_on
 
@@ -173,9 +190,17 @@ func flatten_character():
 	if !is_skill_on:
 		change_scale.tween_property($Temp_Body, "mesh:size", Vector3(2, 1, 2), 0.25)
 		change_offset.tween_property($Temp_Body, "position:y", 0.5, 0.25)
+		
+		change_scale = get_tree().create_tween()
+		change_scale.tween_property($CollisionShape3D, "shape:size", Vector3(2, 1, 2), 0.25)
+		change_offset.tween_property($CollisionShape3D, "position:y", 0.5, 0.25)
 	else:
 		change_scale.tween_property($Temp_Body, "mesh:size", Vector3(0.75, 2, 0.75), 0.25)
 		change_offset.tween_property($Temp_Body, "position:y", 1.0, 0.25)
+
+		change_scale = get_tree().create_tween()
+		change_scale.tween_property($CollisionShape3D, "shape:size", Vector3(0.75, 2, 0.75), 0.25)
+		change_offset.tween_property($CollisionShape3D, "position:y", 1.0, 0.25)
 	
 	is_skill_on = !is_skill_on
 
