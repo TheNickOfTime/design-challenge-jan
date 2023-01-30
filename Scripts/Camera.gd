@@ -3,7 +3,7 @@ class_name PlayerCamera
 
 
 var character : CharacterBody3D
-var offset : Vector3 = Vector3(0, 1.8, 0)
+# var offset : Vector3 = Vector3(0, 1.8, 0)
 var mouse_delta : Vector2
 var pan_speed : float = 0.25
 var pan_direction : int = -1
@@ -25,7 +25,7 @@ func _process(delta):
 
 func follow_camera(delta : float):
 	# position = character.position + offset
-	var target_position : Vector3 = character.position + offset
+	var target_position : Vector3 = character.position + character.camera_offset
 	position = position.lerp(target_position, delta * 7.5)
 
 

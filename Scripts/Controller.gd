@@ -113,7 +113,7 @@ func character_skill_primary():
 	match current_character.character_skill:
 		PlayerCharacter.CHARACTER_SKILL.GROW:
 			print("Growing")
-			current_character.grow_character()
+			current_character.grow_character(true)
 		PlayerCharacter.CHARACTER_SKILL.DIVIDE:
 			print("Dividing")
 			current_character.divide_character()
@@ -122,7 +122,7 @@ func character_skill_secondary():
 	match current_character.character_skill:
 		PlayerCharacter.CHARACTER_SKILL.GROW:
 			print("Flattening")
-			current_character.flatten_character()
+			current_character.grow_character(false)
 		PlayerCharacter.CHARACTER_SKILL.DIVIDE:
 			print("Dividing")
 			current_character.command_twin(camera.get_position_from_raycast())
