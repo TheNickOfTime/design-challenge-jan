@@ -10,6 +10,7 @@ enum CHARACTER_SKILL {NONE, GROW, DIVIDE}
 
 # On Ready Vars-------------------------------------------------------------------------------------
 @onready var nav_agent : NavigationAgent3D = $NavigationAgent3D
+@onready var default_camera_offset : Vector3 = camera_offset
 
 # Export Vars---------------------------------------------------------------------------------------
 @export var character_skill : CHARACTER_SKILL
@@ -26,6 +27,8 @@ var move_direction : Vector2
 var move_speed : float = 5.0
 var rotate_speed : float = 1
 var rotate_direction : Vector2
+
+var camera_offset : Vector3 = Vector3(0, 1.8, 0)
 
 var nav_destination : Vector3
 
@@ -50,7 +53,7 @@ func _physics_process(delta):
 			velocity = Vector3.ZERO
 			move_and_slide()
 		CONTROL_STATE.INPUT:
-			move_input(move_direction)
+			move_input(move_direction, delta)
 		CONTROL_STATE.NAVIGATION:
 			move_nav()
 
@@ -62,9 +65,7 @@ func _on_preview_character_spawned_character(spawned_character : Node3D):
 
 
 # INPUT Movement Functions--------------------------------------------------------------------------
-func move_input(direction : Vector2):
-	# if !can_move: return
-
+func move_input(direction : Vector2, delta : float):
 	var new_direction = (transform.basis * Vector3(direction.x, 0, direction.y)).normalized()
 	if new_direction:
 		velocity.x = new_direction.x * SPEED
@@ -74,11 +75,14 @@ func move_input(direction : Vector2):
 		velocity.z = move_toward(velocity.z, 0, SPEED)
 
 	move_and_slide()
+	# move_and_collide(velocity * delta)
 
 
 func move_nav():
+	if nav_destination == null: return
+
 	var current_position : Vector3 = global_transform.origin
-	var next_position : Vector3 = nav_agent.get_next_location()
+	var next_position : Vector3 = nav_agent.get_next_path_position()
 	var direction : Vector3 = next_position - current_position
 	var distance : float = current_position.distance_to(next_position)
 
@@ -104,10 +108,6 @@ func set_new_nav_destination(new_destination : Vector3):
 
 # Divide Character Funcs----------------------------------------------------------------------------
 func divide_character():
-	# var change_radius : Tween = get_tree().create_tween()
-	# var change_height : Tween = get_tree().create_tween()
-	# var change_offset : Tween = get_tree().create_tween()
-	
 	if !is_skill_on:
 		can_move = false
 
@@ -126,9 +126,12 @@ func divide_character():
 		$CollisionShape3D.shape.height = 1.0
 		$CollisionShape3D.position.y = 0.5
 		
-		var tween = get_tree().create_tween()
-		tween.tween_property(self, "position", position + Vector3.UP, 0.25)
-		await tween.finished
+		var tween_position = get_tree().create_tween()
+		tween_position.tween_property(self, "position", position + Vector3.UP, 0.25)
+		var tween_camera_offset = get_tree().create_tween()
+		var new_camera_offset = Vector3(0, 0.8, 0)
+		tween_camera_offset.tween_property(self, "camera_offset", new_camera_offset, 0.25)
+		await tween_position.finished
 
 		# Spawn dummy character
 		var dummy_character = preview_character.instantiate()
@@ -136,9 +139,9 @@ func divide_character():
 		get_parent().add_child(dummy_character)
 		dummy_character.spawned_character.connect(_on_preview_character_spawned_character)
 
-		tween = get_tree().create_tween()
-		tween.tween_property(decoy_body, "scale", Vector3.ZERO, 0.25)
-		await tween.finished
+		var tween_body_scale = get_tree().create_tween()
+		tween_body_scale.tween_property(decoy_body, "scale", Vector3.ZERO, 0.25)
+		await tween_body_scale.finished
 		decoy_body.queue_free()
 		
 		can_move = true
@@ -147,6 +150,9 @@ func divide_character():
 		var change_height : Tween = get_tree().create_tween()
 		var change_offset : Tween = get_tree().create_tween()
 		var change_dummy_scale : Tween = get_tree().create_tween()
+		var tween_camera_offset = get_tree().create_tween()
+		var new_camera_offset = default_camera_offset
+		tween_camera_offset.tween_property(self, "camera_offset", new_camera_offset, 0.25)
 		change_height.tween_property($Temp_Body, "mesh:height", 2.0, 0.25)
 		change_offset.tween_property($Temp_Body, "position:y", 1.0, 0.25)
 		change_dummy_scale.tween_property(split_character, "scale", Vector3.ZERO, 0.25)
@@ -162,58 +168,36 @@ func command_twin(destination : Vector3):
 
 
 # Grow Character Funcs------------------------------------------------------------------------------
-func grow_character():
-	var change_scale : Tween = get_tree().create_tween()
-	var change_offset : Tween = get_tree().create_tween()
+func grow_character(is_grow : bool):
+	var change_mesh_scale : Tween = get_tree().create_tween()
+	var change_mesh_offset : Tween = get_tree().create_tween()
+	var change_col_scale : Tween = get_tree().create_tween()
+	var change_col_offset : Tween = get_tree().create_tween()
+	var change_camera_offset : Tween = get_tree().create_tween()
+
+	var new_size : Vector3 = Vector3(0.5, 3, 0.5) if is_grow else Vector3(2, 1, 2)
+	var original_size : Vector3 = Vector3(0.75, 2, 0.75)
+
+	var new_offset : float = new_size.y / 2
+	var original_offset : float = original_size.y / 2
+
+	var new_camera_offset : Vector3 = Vector3(0, 2.8, 0) if is_grow else Vector3(0, 0.8, 0)
 
 	if !is_skill_on:
-		change_scale.tween_property($Temp_Body, "mesh:size", Vector3(0.5, 3, 0.5), 0.25)
-		change_offset.tween_property($Temp_Body, "position:y", 1.5, 0.25)
+		change_mesh_scale.tween_property($Temp_Body, "mesh:size", new_size, 0.25)
+		change_mesh_offset.tween_property($Temp_Body, "position:y", new_offset, 0.25)
 
-		change_scale = get_tree().create_tween()
-		change_scale.tween_property($CollisionShape3D, "shape:size", Vector3(0.5, 3, 0.5), 0.25)
-		change_offset.tween_property($CollisionShape3D, "position:y", 1.5, 0.25)
+		change_col_scale.tween_property($CollisionShape3D, "shape:size", new_size, 0.25)
+		change_col_offset.tween_property($CollisionShape3D, "position:y", new_offset, 0.25)
+
+		change_camera_offset.tween_property(self, "camera_offset", new_camera_offset, 0.25)
 	else:
-		change_scale.tween_property($Temp_Body, "mesh:size", Vector3(0.75, 2, 0.75), 0.25)
-		change_offset.tween_property($Temp_Body, "position:y", 1.0, 0.25)
+		change_mesh_scale.tween_property($Temp_Body, "mesh:size", original_size, 0.25)
+		change_mesh_offset.tween_property($Temp_Body, "position:y", original_offset, 0.25)
 
-		change_scale = get_tree().create_tween()
-		change_scale.tween_property($CollisionShape3D, "shape:size", Vector3(0.75, 2, 0.75), 0.25)
-		change_offset.tween_property($CollisionShape3D, "position:y", 1.0, 0.25)
+		change_col_scale.tween_property($CollisionShape3D, "shape:size", original_size, 0.25)
+		change_col_offset.tween_property($CollisionShape3D, "position:y", original_offset, 0.25)
+
+		change_camera_offset.tween_property(self, "camera_offset", default_camera_offset, 0.25)
 	
 	is_skill_on = !is_skill_on
-
-func flatten_character():
-	var change_scale : Tween = get_tree().create_tween()
-	var change_offset : Tween = get_tree().create_tween()
-
-	if !is_skill_on:
-		change_scale.tween_property($Temp_Body, "mesh:size", Vector3(2, 1, 2), 0.25)
-		change_offset.tween_property($Temp_Body, "position:y", 0.5, 0.25)
-		
-		change_scale = get_tree().create_tween()
-		change_scale.tween_property($CollisionShape3D, "shape:size", Vector3(2, 1, 2), 0.25)
-		change_offset.tween_property($CollisionShape3D, "position:y", 0.5, 0.25)
-	else:
-		change_scale.tween_property($Temp_Body, "mesh:size", Vector3(0.75, 2, 0.75), 0.25)
-		change_offset.tween_property($Temp_Body, "position:y", 1.0, 0.25)
-
-		change_scale = get_tree().create_tween()
-		change_scale.tween_property($CollisionShape3D, "shape:size", Vector3(0.75, 2, 0.75), 0.25)
-		change_offset.tween_property($CollisionShape3D, "position:y", 1.0, 0.25)
-	
-	is_skill_on = !is_skill_on
-
-
-# func shrink_character():
-# 	var change_scale : Tween = get_tree().create_tween()
-# 	var change_offset : Tween = get_tree().create_tween()
-	
-# 	if !is_skill_on:
-# 		change_scale.tween_property($Temp_Body, "mesh:height", 1.0, 0.25)
-# 		change_offset.tween_property($Temp_Body, "position:y", 0.5, 0.25)
-# 	else:
-# 		change_scale.tween_property($Temp_Body, "mesh:height", 2.0, 0.25)
-# 		change_offset.tween_property($Temp_Body, "position:y", 1.0, 0.25)
-	
-# 	is_skill_on = !is_skill_on
