@@ -75,11 +75,10 @@ func move_input(direction : Vector2, delta : float):
 		velocity.z = move_toward(velocity.z, 0, SPEED)
 
 	move_and_slide()
-	# move_and_collide(velocity * delta)
 
 
 func move_nav():
-	if nav_destination == null: return
+	# if nav_destination == null: return
 
 	var current_position : Vector3 = global_transform.origin
 	var next_position : Vector3 = nav_agent.get_next_path_position()
@@ -103,7 +102,7 @@ func rotate_character(delta : float):
 
 func set_new_nav_destination(new_destination : Vector3):
 	nav_destination = new_destination
-	nav_agent.set_target_location(new_destination)
+	nav_agent.target_position = new_destination
 
 
 # Divide Character Funcs----------------------------------------------------------------------------
@@ -113,7 +112,7 @@ func divide_character():
 
 		# Store initial transform
 		var starting_trans : Transform3D = transform
-		var starting_pos : Vector3 = position
+		# var starting_pos : Vector3 = position
 
 		# Spawn decoy body to cover up transitions
 		var decoy_body = decoy_character.instantiate()
@@ -135,7 +134,8 @@ func divide_character():
 
 		# Spawn dummy character
 		var dummy_character = preview_character.instantiate()
-		dummy_character.position = starting_pos
+		# dummy_character.position = starting_pos
+		dummy_character.transform = starting_trans
 		get_parent().add_child(dummy_character)
 		dummy_character.spawned_character.connect(_on_preview_character_spawned_character)
 
@@ -149,12 +149,16 @@ func divide_character():
 	elif split_character != null:
 		var change_height : Tween = get_tree().create_tween()
 		var change_offset : Tween = get_tree().create_tween()
+		var change_col_height : Tween = get_tree().create_tween()
+		var change_col_offset : Tween = get_tree().create_tween()
 		var change_dummy_scale : Tween = get_tree().create_tween()
 		var tween_camera_offset = get_tree().create_tween()
 		var new_camera_offset = default_camera_offset
 		tween_camera_offset.tween_property(self, "camera_offset", new_camera_offset, 0.25)
 		change_height.tween_property($Temp_Body, "mesh:height", 2.0, 0.25)
 		change_offset.tween_property($Temp_Body, "position:y", 1.0, 0.25)
+		change_col_height.tween_property($CollisionShape3D, "shape:height", 2, 0.25)
+		change_col_offset.tween_property($CollisionShape3D, "position:y", 1.0, 0.25)
 		change_dummy_scale.tween_property(split_character, "scale", Vector3.ZERO, 0.25)
 		await change_dummy_scale.finished
 		split_character.queue_free()
