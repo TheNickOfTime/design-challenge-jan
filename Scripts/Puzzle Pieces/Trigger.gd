@@ -7,6 +7,8 @@ signal trigger_deactivated
 # @export var triggerables : Array[Triggerable]
 @export var triggerable : Triggerable
 
+var current_bodies : Array[PhysicsBody3D]
+
 
 func _ready():
 	body_entered.connect(_on_body_entered)
@@ -26,12 +28,20 @@ func _process(delta):
 
 func _on_body_entered(body : Node3D):
 	if body.is_in_group("Character"):
-		trigger_entered()
+		print_debug(body.name + " has entered " + self.name)
+		current_bodies.append(body)
+
+		if current_bodies.size() == 1:
+			trigger_entered()
 
 
 func _on_body_exited(body : Node3D):
 	if body.is_in_group("Character"):
-		trigger_exited()
+		print_debug(body.name + " has exited " + self.name)
+		current_bodies.erase(body)
+
+		if current_bodies.size() <= 0:
+			trigger_exited()
 
 
 func trigger_entered():

@@ -27,6 +27,7 @@ var move_direction : Vector2
 var move_speed : float = 5.0
 var rotate_speed : float = 1
 var rotate_direction : Vector2
+var additional_forces : Vector3
 
 var camera_offset : Vector3 = Vector3(0, 1.8, 0)
 
@@ -50,7 +51,7 @@ func _physics_process(delta):
 	
 	match control_state:
 		CONTROL_STATE.NONE:
-			velocity = Vector3.ZERO
+			velocity = Vector3.ZERO + additional_forces
 			move_and_slide()
 		CONTROL_STATE.INPUT:
 			move_input(move_direction, delta)
@@ -73,6 +74,8 @@ func move_input(direction : Vector2, delta : float):
 	else:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
 		velocity.z = move_toward(velocity.z, 0, SPEED)
+	
+	velocity += additional_forces
 
 	move_and_slide()
 
