@@ -6,6 +6,7 @@ signal trigger_deactivated
 
 # @export var triggerables : Array[Triggerable]
 @export var triggerable : Triggerable
+@export var power_line : Node3D
 
 var current_bodies : Array[PhysicsBody3D]
 

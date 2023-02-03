@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://m7n8akyxrtna"]
+
+[ext_resource type="Script" path="res://Scripts/Power_Line.gd" id="1_gyjqv"]
+[ext_resource type="PackedScene" uid="uid://wqop0lyi16w0" path="res://Prefab/power_line_decal.tscn" id="2_owvgd"]
+
+[sub_resource type="Curve3D" id="Curve3D_ykq4i"]
+bake_interval = 1.0
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 0, 0),
+"tilts": PackedFloat32Array(0, 0)
+}
+point_count = 2
+
+[node name="Power_Line" type="Path3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, 0.5, 0)
+curve = SubResource("Curve3D_ykq4i")
+script = ExtResource("1_gyjqv")
+decal = ExtResource("2_owvgd")
+activated_color = Color(0, 1, 0, 1)
+deactivated_color = Color(0, 0, 0, 1)

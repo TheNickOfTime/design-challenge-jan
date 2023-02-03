@@ -11,12 +11,16 @@ func _ready():
 func trigger_entered():
 	button_anim.play("button_down")
 
+	power_line.update_decal_colors(true, button_anim.current_animation_length)
+
 	await button_anim.animation_finished
 
 	trigger_activated.emit()
 
 func trigger_exited():
 	button_anim.play_backwards("button_down")
+
+	power_line.update_decal_colors(false, button_anim.current_animation_length)
 
 	await button_anim.animation_finished
 
