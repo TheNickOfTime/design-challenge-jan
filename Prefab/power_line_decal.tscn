@@ -1,6 +1,6 @@
-[gd_scene load_steps=2 format=3 uid="uid://wqop0lyi16w0"]
+[gd_scene load_steps=2 format=3]
 
-[ext_resource type="Texture2D" uid="uid://d0br3fgu8ujf1" path="res://Dot_32x32.png" id="1_vpybc"]
+[ext_resource type="Texture2D" uid="uid://d0br3fgu8ujf1" path="res://Sprites/Dot_32x32.png" id="1_vpybc"]
 
 [node name="Power_Line_Decal" type="Decal"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, 0.5, 0)

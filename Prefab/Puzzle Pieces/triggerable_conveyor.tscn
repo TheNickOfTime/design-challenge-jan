@@ -1,6 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://behv3fq6xvqdp"]
+[gd_scene load_steps=7 format=3 uid="uid://behv3fq6xvqdp"]
 
 [ext_resource type="Script" path="res://Scripts/Puzzle Pieces/Triggerable_Conveyor.gd" id="1_rcysj"]
+[ext_resource type="Texture2D" uid="uid://hh3v0h7fiffv" path="res://Sprites/512x256_Rectangle.png" id="2_m7n06"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_41j8o"]
 size = Vector3(2, 2, 10)
@@ -11,28 +12,47 @@ size = Vector3(2, 0.1, 10)
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_tp4i3"]
 points = PackedVector3Array(1, 0.05, 5, 1, -0.05, 5, 1, 0.05, -5, -1, 0.05, 5, -1, -0.05, 5, 1, -0.05, -5, -1, 0.05, -5, -1, -0.05, -5)
 
+[sub_resource type="Curve3D" id="Curve3D_hhiuj"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 2.08165e-12, 2.08165e-12, -6, 0, 0, 0, 0, 0, 0, 2.08165e-12, 2.08165e-12, 6),
+"tilts": PackedFloat32Array(0, 0)
+}
+point_count = 2
+
 [node name="Triggerable_Conveyor" type="Area3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21.5, 0, 15)
 collision_mask = 3
 script = ExtResource("1_rcysj")
 direction = Vector3(0, 0, 1)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, 1.1, 2.08165e-12)
 shape = SubResource("BoxShape3D_41j8o")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, 0.05, 2.08165e-12)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.2, 0)
+layers = 2
 mesh = SubResource("BoxMesh_u0nt7")
 skeleton = NodePath("../..")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.2, 0)
 shape = SubResource("ConvexPolygonShape3D_tp4i3")
 disabled = true
+
+[node name="Path3D" type="Path3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, 0.1, 2.08165e-12)
+curve = SubResource("Curve3D_hhiuj")
+
+[node name="Conveyor_Section_01" type="PathFollow3D" parent="Path3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, 2.08165e-12, -5)
+
+[node name="Decal" type="Decal" parent="Path3D/Conveyor_Section_01"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.5)
+extents = Vector3(1, 1, 0.45)
+texture_albedo = ExtResource("2_m7n06")
+modulate = Color(0.15, 0.15, 0.15, 1)
+cull_mask = 2
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="body_exited" from="." to="." method="_on_body_exited"]
