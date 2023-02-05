@@ -2,9 +2,9 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://d0br3fgu8ujf1"
-path.s3tc="res://.godot/imported/Dot_32x32.png-f0086ddac4fb229839f0834da94ff2e1.s3tc.ctex"
-path.etc2="res://.godot/imported/Dot_32x32.png-f0086ddac4fb229839f0834da94ff2e1.etc2.ctex"
+uid="uid://hh3v0h7fiffv"
+path.s3tc="res://.godot/imported/512x256_Rectangle.png-c15290e35de40a5fb11f9d75d5312d5d.s3tc.ctex"
+path.etc2="res://.godot/imported/512x256_Rectangle.png-c15290e35de40a5fb11f9d75d5312d5d.etc2.ctex"
 metadata={
 "imported_formats": ["s3tc", "etc2"],
 "vram_texture": true
@@ -12,8 +12,8 @@ metadata={
 
 [deps]
 
-source_file="res://Dot_32x32.png"
-dest_files=["res://.godot/imported/Dot_32x32.png-f0086ddac4fb229839f0834da94ff2e1.s3tc.ctex", "res://.godot/imported/Dot_32x32.png-f0086ddac4fb229839f0834da94ff2e1.etc2.ctex"]
+source_file="res://Sprites/512x256_Rectangle.png"
+dest_files=["res://.godot/imported/512x256_Rectangle.png-c15290e35de40a5fb11f9d75d5312d5d.s3tc.ctex", "res://.godot/imported/512x256_Rectangle.png-c15290e35de40a5fb11f9d75d5312d5d.etc2.ctex"]
 
 [params]
 

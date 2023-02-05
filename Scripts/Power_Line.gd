@@ -13,7 +13,7 @@ var decals : Array[Decal]
 
 
 func _enter_tree():
-	curve = Curve3D.new()
+#	curve = curve.duplicate()
 	curve_changed.connect(_on_curve_changed)
 	update_decals()
 
