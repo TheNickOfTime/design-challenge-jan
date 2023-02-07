@@ -94,8 +94,11 @@ func move_nav():
 
 		# rotate_direction = Vector2(direction.x, direction.z).normalized()
 		look_at(next_position)
-
-		move_and_slide()
+	else:
+		velocity = Vector3.ZERO
+	
+	velocity += additional_forces
+	move_and_slide()
 
 
 func rotate_character(delta : float):

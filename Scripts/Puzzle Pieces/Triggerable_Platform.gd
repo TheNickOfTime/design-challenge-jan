@@ -4,8 +4,7 @@ extends Triggerable
 @export var move_distance : float = 2
 @export var move_speed : float = 2
 @export var move_direction : Vector3 = Vector3(0, 1, 0)
-
-@onready var platform : StaticBody3D = $StaticBody_Platform
+@export var platform : StaticBody3D
 
 
 func trigger_activated():

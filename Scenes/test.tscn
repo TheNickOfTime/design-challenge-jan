@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://c7iedvn6niuph"]
+[gd_scene load_steps=20 format=3 uid="uid://c7iedvn6niuph"]
 
 [ext_resource type="Script" path="res://Scripts/Controller.gd" id="1_vb8a6"]
 [ext_resource type="Material" uid="uid://b30nyv8fik6a3" path="res://Materials/Prototype/material_prototype.tres" id="2_2t20c"]
@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://behv3fq6xvqdp" path="res://Prefab/Puzzle Pieces/triggerable_conveyor.tscn" id="8_ba1pt"]
 [ext_resource type="PackedScene" uid="uid://daa6nkw1odf7s" path="res://Prefab/Puzzle Pieces/trigger_button.tscn" id="8_ilwf5"]
 [ext_resource type="PackedScene" uid="uid://m7n8akyxrtna" path="res://Prefab/power_line.tscn" id="9_pkmq6"]
+[ext_resource type="Script" path="res://Scripts/Puzzle Pieces/Relay.gd" id="10_l3p4v"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_xc4vq"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -42,6 +43,27 @@ _data = {
 "tilts": PackedFloat32Array(0, 0)
 }
 point_count = 2
+
+[sub_resource type="Curve3D" id="Curve3D_0ec7m"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -5, 0, 0, 0, 0, 0, 0, 6, 0, -5),
+"tilts": PackedFloat32Array(0, 0, 0)
+}
+point_count = 3
+
+[sub_resource type="Curve3D" id="Curve3D_hfmig"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 2.08165e-12, 2.08165e-12),
+"tilts": PackedFloat32Array(0, 0)
+}
+point_count = 2
+
+[sub_resource type="Curve3D" id="Curve3D_i2dxm"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 0, 0, 0, 0, 0, 0, 6, 0, 5),
+"tilts": PackedFloat32Array(0, 0, 0)
+}
+point_count = 3
 
 [node name="Node3D" type="Node3D"]
 
@@ -112,24 +134,76 @@ collision_mask = 1
 [node name="Character_Divide" parent="." instance=ExtResource("4_lx8or")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, -5.25)
 
-[node name="Trigger_Button" parent="." node_paths=PackedStringArray("triggerable", "power_line") instance=ExtResource("8_ilwf5")]
+[node name="Group 1" type="Node3D" parent="."]
+
+[node name="Trigger_Button" parent="Group 1" node_paths=PackedStringArray("triggerable", "power_line") instance=ExtResource("8_ilwf5")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.5, 0.5, 0)
 triggerable = NodePath("../Triggerable_Platform")
-power_line = NodePath("../Power_Line_01")
+power_line = NodePath("../Power_Line")
 
-[node name="Trigger_Button2" parent="." node_paths=PackedStringArray("triggerable", "power_line") instance=ExtResource("8_ilwf5")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.5, 0.5, 15)
-triggerable = NodePath("../Triggerable_Conveyor")
-power_line = NodePath("../Power_Line_02")
-
-[node name="Triggerable_Platform" parent="." instance=ExtResource("7_jlduj")]
-
-[node name="Triggerable_Conveyor" parent="." instance=ExtResource("8_ba1pt")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21.5, 0.55, 15)
-
-[node name="Power_Line_01" parent="." instance=ExtResource("9_pkmq6")]
+[node name="Power_Line" parent="Group 1" instance=ExtResource("9_pkmq6")]
 curve = SubResource("Curve3D_6qh16")
 
-[node name="Power_Line_02" parent="." instance=ExtResource("9_pkmq6")]
+[node name="Triggerable_Platform" parent="Group 1" instance=ExtResource("7_jlduj")]
+
+[node name="Group 2" type="Node3D" parent="."]
+
+[node name="Trigger_Button" parent="Group 2" node_paths=PackedStringArray("triggerable", "power_line") instance=ExtResource("8_ilwf5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.5, 0.5, 15)
+triggerable = NodePath("../Triggerable_Conveyor")
+power_line = NodePath("../Power_Line")
+
+[node name="Power_Line" parent="Group 2" instance=ExtResource("9_pkmq6")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, 0.5, 15)
 curve = SubResource("Curve3D_w32e4")
+
+[node name="Triggerable_Conveyor" parent="Group 2" instance=ExtResource("8_ba1pt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21.5, 0.55, 15)
+
+[node name="Group 3" type="Node3D" parent="."]
+
+[node name="Trigger_Button" parent="Group 3" node_paths=PackedStringArray("triggerable", "power_line") instance=ExtResource("8_ilwf5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.5, 0.5, -14.5)
+triggerable = NodePath("../Triggerable_Platform_01")
+power_line = NodePath("../Power_Line_01")
+
+[node name="Sub_Trigger_01" type="Node3D" parent="Group 3/Trigger_Button" node_paths=PackedStringArray("triggerable", "power_line")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.5, -0.5, 14.5)
+script = ExtResource("10_l3p4v")
+triggerable = NodePath("../../Triggerable_Platform_01")
+power_line = NodePath("../../Power_Line_01")
+
+[node name="Sub_Trigger_02" type="Node3D" parent="Group 3/Trigger_Button" node_paths=PackedStringArray("triggerable", "power_line")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.5, -0.5, 14.5)
+script = ExtResource("10_l3p4v")
+triggerable = NodePath("../../Triggerable_Platform_02")
+power_line = NodePath("../../Power_Line_02")
+
+[node name="Sub_Trigger_03" type="Node3D" parent="Group 3/Trigger_Button" node_paths=PackedStringArray("triggerable", "power_line")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.5, -0.5, 14.5)
+script = ExtResource("10_l3p4v")
+triggerable = NodePath("../../Triggerable_Platform_03")
+power_line = NodePath("../../Power_Line_03")
+
+[node name="Power_Line_01" parent="Group 3" instance=ExtResource("9_pkmq6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, 0.5, -14.5)
+curve = SubResource("Curve3D_0ec7m")
+
+[node name="Power_Line_02" parent="Group 3" instance=ExtResource("9_pkmq6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, 0.5, -14.5)
+curve = SubResource("Curve3D_hfmig")
+
+[node name="Power_Line_03" parent="Group 3" instance=ExtResource("9_pkmq6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, 0.5, -14.5)
+curve = SubResource("Curve3D_i2dxm")
+
+[node name="Triggerable_Platform_01" parent="Group 3" instance=ExtResource("7_jlduj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21, 0.5, -19.5)
+move_distance = 1.0
+
+[node name="Triggerable_Platform_02" parent="Group 3" instance=ExtResource("7_jlduj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21, 0.5, -14.5)
+
+[node name="Triggerable_Platform_03" parent="Group 3" instance=ExtResource("7_jlduj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21, 0.5, -9.5)
+move_distance = 3.0
