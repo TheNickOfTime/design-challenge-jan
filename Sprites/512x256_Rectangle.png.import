@@ -3,16 +3,16 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://hh3v0h7fiffv"
-path.s3tc="res://.godot/imported/512x256_Rectangle.png-c15290e35de40a5fb11f9d75d5312d5d.s3tc.ctex"
+path.etc2="res://.godot/imported/512x256_Rectangle.png-c15290e35de40a5fb11f9d75d5312d5d.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://Sprites/512x256_Rectangle.png"
-dest_files=["res://.godot/imported/512x256_Rectangle.png-c15290e35de40a5fb11f9d75d5312d5d.s3tc.ctex"]
+dest_files=["res://.godot/imported/512x256_Rectangle.png-c15290e35de40a5fb11f9d75d5312d5d.etc2.ctex"]
 
 [params]
 

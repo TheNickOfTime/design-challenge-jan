@@ -32,7 +32,7 @@ func _process(delta):
 
 
 func _on_body_entered(body : Node3D):
-	if body.is_in_group("Character"):
+	if body.is_in_group("Character") or body.is_in_group("Foreground"):
 		print_debug(body.name + " has entered " + self.name)
 		current_bodies.append(body)
 
@@ -41,7 +41,7 @@ func _on_body_entered(body : Node3D):
 
 
 func _on_body_exited(body : Node3D):
-	if body.is_in_group("Character"):
+	if body.is_in_group("Character") or body.is_in_group("Foreground"):
 		print_debug(body.name + " has exited " + self.name)
 		current_bodies.erase(body)
 
