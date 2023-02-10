@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://pdjldor3u1"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_6jwoy"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_r60oh"]
+
+[node name="Test_Cube" type="RigidBody3D" groups=["Foreground"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.5, 8, 2.08165e-12)
+collision_layer = 2
+collision_mask = 7
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_6jwoy")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_r60oh")

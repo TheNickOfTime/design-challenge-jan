@@ -78,9 +78,10 @@ skill_secondary={
 [layer_names]
 
 3d_render/layer_2="Puzzle"
-3d_physics/layer_1="Default"
-3d_physics/layer_2="Player"
-3d_physics/layer_3="Camera"
+3d_physics/layer_1="Background"
+3d_physics/layer_2="Foreground"
+3d_physics/layer_3="Player"
+3d_physics/layer_4="Camera"
 
 [rendering]
 

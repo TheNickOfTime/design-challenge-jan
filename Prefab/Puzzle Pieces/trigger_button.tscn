@@ -62,7 +62,7 @@ _data = {
 
 [node name="Trigger_Button" type="Area3D" node_paths=PackedStringArray("triggerable")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.1, 0.5, 0)
-collision_mask = 2
+collision_mask = 6
 script = ExtResource("1_1riqd")
 triggerable = NodePath("../Node3D")
 

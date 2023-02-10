@@ -20,7 +20,8 @@ _data = {
 point_count = 2
 
 [node name="Triggerable_Conveyor" type="Area3D"]
-collision_mask = 3
+collision_layer = 2
+collision_mask = 6
 script = ExtResource("1_rcysj")
 direction = Vector3(0, 0, 1)
 
@@ -30,6 +31,8 @@ shape = SubResource("BoxShape3D_41j8o")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, 0.05, 2.08165e-12)
+collision_layer = 2
+collision_mask = 6
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D"]
 layers = 2
@@ -45,11 +48,11 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, 0.1, 2.08165e-12
 curve = SubResource("Curve3D_hhiuj")
 
 [node name="Conveyor_Section_01" type="PathFollow3D" parent="Path3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, 2.08165e-12, -5)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, 2.08165e-12, -6)
 
 [node name="Decal" type="Decal" parent="Path3D/Conveyor_Section_01"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.5)
-extents = Vector3(1, 1, 0.45)
+size = Vector3(2, 2, 0.9)
 texture_albedo = ExtResource("2_m7n06")
 modulate = Color(0.15, 0.15, 0.15, 1)
 cull_mask = 2
