@@ -82,6 +82,7 @@ skill_secondary={
 3d_physics/layer_2="Foreground"
 3d_physics/layer_3="Player"
 3d_physics/layer_4="Camera"
+3d_physics/layer_5="Beam"
 
 [rendering]
 

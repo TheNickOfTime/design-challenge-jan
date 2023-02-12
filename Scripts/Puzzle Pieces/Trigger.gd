@@ -4,16 +4,24 @@ class_name Trigger
 signal trigger_activated
 signal trigger_deactivated
 
+enum TriggerMethod {BODY, AREA}
+
 # @export var triggerables : Array[Triggerable]
 @export var triggerable : Triggerable
 @export var power_line : Node3D
 
+@export var trigger_method : TriggerMethod
 var current_bodies : Array[PhysicsBody3D]
 
 
 func _ready():
-	body_entered.connect(_on_body_entered)
-	body_exited.connect(_on_body_exited)
+	match trigger_method:
+		TriggerMethod.BODY:
+			body_entered.connect(_on_body_entered)
+			body_exited.connect(_on_body_exited)
+		TriggerMethod.AREA:
+			area_entered.connect(_on_area_entered)
+			area_exited.connect(_on_area_exited)
 
 	if triggerable != null:
 		trigger_activated.connect(triggerable._on_trigger_activated)
@@ -37,7 +45,7 @@ func _on_body_entered(body : Node3D):
 		current_bodies.append(body)
 
 		if current_bodies.size() == 1:
-			trigger_entered()
+			trigger_entered(body as Node3D)
 
 
 func _on_body_exited(body : Node3D):
@@ -46,12 +54,23 @@ func _on_body_exited(body : Node3D):
 		current_bodies.erase(body)
 
 		if current_bodies.size() <= 0:
-			trigger_exited()
+			trigger_exited(body as Node3D)
 
 
-func trigger_entered():
+func _on_area_entered(area : Area3D):
+	print_debug(area.name + " has entered " + self.name)
+	trigger_entered(area as Node3D)
+
+
+func _on_area_exited(area : Area3D):
+	print_debug(area.name + " has exited " + self.name)
+	trigger_exited(area as Node3D)
+
+
+
+func trigger_entered(node : Node3D):
 	pass
 
 
-func trigger_exited():
+func trigger_exited(node : Node3D):
 	pass

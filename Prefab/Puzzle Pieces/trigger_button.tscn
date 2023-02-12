@@ -65,6 +65,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.1, 0.5, 0)
 collision_mask = 6
 script = ExtResource("1_1riqd")
 triggerable = NodePath("../Node3D")
+trigger_method = 0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.15, 0)
