@@ -1,4 +1,4 @@
-extends Node
+extends Node3D
 class_name Triggerable
 
 
@@ -6,7 +6,8 @@ class_name Triggerable
 
 
 func _ready():
-	pass
+	if is_activated:
+		trigger_activated()
 
 
 func _process(delta):
