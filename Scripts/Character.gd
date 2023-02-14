@@ -2,6 +2,8 @@ extends CharacterBody3D
 class_name PlayerCharacter
 
 
+signal character_split(character : PlayerCharacter)
+
 const SPEED = 5.0
 const JUMP_VELOCITY = 4.5
 
@@ -11,6 +13,7 @@ enum CHARACTER_SKILL {NONE, GROW, DIVIDE}
 # On Ready Vars-------------------------------------------------------------------------------------
 @onready var nav_agent : NavigationAgent3D = $NavigationAgent3D
 @onready var default_camera_offset : Vector3 = camera_offset
+@onready var anim_player : AnimationPlayer = $AniamtionPlayer
 
 # Export Vars---------------------------------------------------------------------------------------
 @export var character_skill : CHARACTER_SKILL
@@ -34,6 +37,7 @@ var camera_offset : Vector3 = Vector3(0, 1.8, 0)
 var nav_destination : Vector3
 
 var can_move : bool = true
+var can_use_skill : bool = true
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
@@ -63,6 +67,7 @@ func _physics_process(delta):
 func _on_preview_character_spawned_character(spawned_character : Node3D):
 	split_character = spawned_character
 	split_character.control_state = PlayerCharacter.CONTROL_STATE.NAVIGATION
+	character_split.emit(self)
 
 
 # INPUT Movement Functions--------------------------------------------------------------------------
@@ -113,8 +118,9 @@ func set_new_nav_destination(new_destination : Vector3):
 
 # Divide Character Funcs----------------------------------------------------------------------------
 func divide_character():
-	if !is_skill_on:
+	if !is_skill_on && can_use_skill:
 		can_move = false
+		can_use_skill = false
 
 		# Store initial transform
 		var starting_trans : Transform3D = transform
@@ -147,12 +153,18 @@ func divide_character():
 
 		var tween_body_scale = get_tree().create_tween()
 		tween_body_scale.tween_property(decoy_body, "scale", Vector3.ZERO, 0.25)
+
+		is_skill_on = true
+
+		character_split.emit(self)
 		await tween_body_scale.finished
 		decoy_body.queue_free()
 		
 		can_move = true
-		is_skill_on = true
+		can_use_skill = true
 	elif split_character != null:
+		can_use_skill = false
+
 		var change_height : Tween = get_tree().create_tween()
 		var change_offset : Tween = get_tree().create_tween()
 		var change_col_height : Tween = get_tree().create_tween()
@@ -168,7 +180,10 @@ func divide_character():
 		change_dummy_scale.tween_property(split_character, "scale", Vector3.ZERO, 0.25)
 		await change_dummy_scale.finished
 		split_character.queue_free()
+		split_character = null
 		is_skill_on = false
+		character_split.emit(self)
+		can_use_skill = true
 
 func command_twin(destination : Vector3):
 	if is_skill_on and split_character != null:
@@ -179,35 +194,11 @@ func command_twin(destination : Vector3):
 
 # Grow Character Funcs------------------------------------------------------------------------------
 func grow_character(is_grow : bool):
-	var change_mesh_scale : Tween = get_tree().create_tween()
-	var change_mesh_offset : Tween = get_tree().create_tween()
-	var change_col_scale : Tween = get_tree().create_tween()
-	var change_col_offset : Tween = get_tree().create_tween()
-	var change_camera_offset : Tween = get_tree().create_tween()
 
-	var new_size : Vector3 = Vector3(0.5, 3, 0.5) if is_grow else Vector3(2, 1, 2)
-	var original_size : Vector3 = Vector3(0.75, 2, 0.75)
+	var anim_tree : AnimationTree = $AnimationTree
+	var target_blend : float = (1 if is_grow else -1) if !is_skill_on else 0
 
-	var new_offset : float = new_size.y / 2
-	var original_offset : float = original_size.y / 2
+	var tween_blend : Tween = get_tree().create_tween()
+	tween_blend.tween_property(anim_tree, "parameters/blend_position", target_blend, 0.25)
 
-	var new_camera_offset : Vector3 = Vector3(0, 2.8, 0) if is_grow else Vector3(0, 0.8, 0)
-
-	if !is_skill_on:
-		change_mesh_scale.tween_property($Temp_Body, "mesh:size", new_size, 0.25)
-		change_mesh_offset.tween_property($Temp_Body, "position:y", new_offset, 0.25)
-
-		change_col_scale.tween_property($CollisionShape3D, "shape:size", new_size, 0.25)
-		change_col_offset.tween_property($CollisionShape3D, "position:y", new_offset, 0.25)
-
-		change_camera_offset.tween_property(self, "camera_offset", new_camera_offset, 0.25)
-	else:
-		change_mesh_scale.tween_property($Temp_Body, "mesh:size", original_size, 0.25)
-		change_mesh_offset.tween_property($Temp_Body, "position:y", original_offset, 0.25)
-
-		change_col_scale.tween_property($CollisionShape3D, "shape:size", original_size, 0.25)
-		change_col_offset.tween_property($CollisionShape3D, "position:y", original_offset, 0.25)
-
-		change_camera_offset.tween_property(self, "camera_offset", default_camera_offset, 0.25)
-	
 	is_skill_on = !is_skill_on

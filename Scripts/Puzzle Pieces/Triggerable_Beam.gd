@@ -25,7 +25,7 @@ func _ready():
 
 
 func _process(delta):
-	print(raycast.get_collider())
+	# print(raycast.get_collider())
 
 	if is_activated and can_update_immediate:
 		update_beam_parameters()
