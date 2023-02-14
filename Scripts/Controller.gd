@@ -1,6 +1,11 @@
 extends Node3D
 class_name PlayerController
 
+
+signal character_switch(character : PlayerCharacter)
+
+@export var hud : HUD
+
 var characters : Array[Node]
 var camera : PlayerCamera
 var camera_directions : Array[Transform3D]
@@ -32,8 +37,12 @@ func _ready():
 	
 	setup_player()
 	setup_camera()
-
+	
 	await get_tree().process_frame
+
+	character_switch.connect(hud._on_controller_character_switch)
+	other_character.character_split.connect(hud._on_character_character_split)
+	character_switch.emit(current_character)
 
 	can_move_character = true
 	can_move_camera = true
@@ -84,6 +93,9 @@ func switch_character():
 	character_index = wrapi(character_index + 1, 0, characters.size())
 	setup_player()
 	setup_camera()
+
+	character_switch.emit(current_character)
+	current_character.character_split.emit(current_character)
 
 
 func setup_player():

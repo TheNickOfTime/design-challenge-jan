@@ -1,9 +1,10 @@
-[gd_scene load_steps=34 format=3 uid="uid://clqwanxokclps"]
+[gd_scene load_steps=35 format=3 uid="uid://clqwanxokclps"]
 
 [ext_resource type="Script" path="res://Scripts/Controller.gd" id="1_vb8a6"]
 [ext_resource type="Material" uid="uid://b30nyv8fik6a3" path="res://Materials/Prototype/material_prototype.tres" id="2_2t20c"]
 [ext_resource type="PackedScene" uid="uid://dufv3576nm313" path="res://Prefab/camera.tscn" id="4_g45id"]
 [ext_resource type="PackedScene" uid="uid://dg17faj88yxbf" path="res://Prefab/character_divide.tscn" id="4_lx8or"]
+[ext_resource type="PackedScene" uid="uid://ci7ws2fr51662" path="res://UI/hud.tscn" id="4_menjf"]
 [ext_resource type="PackedScene" uid="uid://cm8pv24m2fom8" path="res://Prefab/character_grow.tscn" id="5_cnkjf"]
 [ext_resource type="PackedScene" uid="uid://c00e2rsxveep5" path="res://Prefab/Puzzle Pieces/triggerable_platform.tscn" id="7_jlduj"]
 [ext_resource type="PackedScene" uid="uid://behv3fq6xvqdp" path="res://Prefab/Puzzle Pieces/triggerable_conveyor.tscn" id="8_ba1pt"]
@@ -130,8 +131,9 @@ environment = SubResource("Environment_cp6nh")
 transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, 0, 0, 0)
 shadow_enabled = true
 
-[node name="Controller" type="Node3D" parent="."]
+[node name="Controller" type="Node3D" parent="." node_paths=PackedStringArray("hud")]
 script = ExtResource("1_vb8a6")
+hud = NodePath("../HUD")
 
 [node name="Camera" parent="." instance=ExtResource("4_g45id")]
 collision_mask = 1
@@ -170,20 +172,7 @@ material = ExtResource("2_2t20c")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -21, 1, -5)
 material = ExtResource("2_2t20c")
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
-
-[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -2.0
-offset_top = -2.0
-offset_right = 2.0
-offset_bottom = 2.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="HUD" parent="." instance=ExtResource("4_menjf")]
 
 [node name="Character_Grow" parent="." instance=ExtResource("5_cnkjf")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 5.25)
