@@ -1,6 +1,6 @@
-[gd_scene load_steps=7 format=3 uid="uid://c4avxqprc0nmn"]
+[gd_scene load_steps=7 format=3]
 
-[ext_resource type="Script" path="res://Scripts/Puzzle Pieces/Triggerable_Door.gd" id="1_djhr6"]
+[ext_resource type="Script" path="res://Scripts/Puzzle Pieces/Triggerables/Triggerable_Door.gd" id="1_djhr6"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_7d1by"]
 size = Vector3(0.25, 2.5, 3)

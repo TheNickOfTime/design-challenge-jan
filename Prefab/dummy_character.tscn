@@ -1,7 +1,7 @@
-[gd_scene load_steps=7 format=3 uid="uid://c450ukmygr4fq"]
+[gd_scene load_steps=7 format=3]
 
 [ext_resource type="Script" path="res://Scripts/Split_Preview.gd" id="1_s07hy"]
-[ext_resource type="PackedScene" uid="uid://bp56fqwnike6l" path="res://Prefab/character_split.tscn" id="2_6ffxn"]
+[ext_resource type="PackedScene" path="res://Prefab/Character/character_twin.tscn" id="2_6ffxn"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_pwp1g"]
 

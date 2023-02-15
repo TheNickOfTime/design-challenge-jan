@@ -1,6 +1,6 @@
-[gd_scene load_steps=6 format=3 uid="uid://c00e2rsxveep5"]
+[gd_scene load_steps=6 format=3]
 
-[ext_resource type="Script" path="res://Scripts/Puzzle Pieces/Triggerable_Platform.gd" id="1_m1c5c"]
+[ext_resource type="Script" path="res://Scripts/Puzzle Pieces/Triggerables/Triggerable_Platform.gd" id="1_m1c5c"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_v4ijq"]
 size = Vector3(4, 0.25, 4)
