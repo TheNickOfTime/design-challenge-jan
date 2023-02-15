@@ -29,17 +29,16 @@ func set_input_enabled(primary : bool, secondary : bool):
 
 
 func _on_controller_character_switch(character : PlayerCharacter):
-	match character.character_skill:
-		PlayerCharacter.CHARACTER_SKILL.GROW:
-			set_input_labels("Stretch", "Squash")
-			set_input_enabled(true, true)
-		PlayerCharacter.CHARACTER_SKILL.DIVIDE:
-			set_input_labels("Divide", "Command")
+	if character is PlayerCharacter_Shift:
+		set_input_labels("Stretch", "Squash")
+		set_input_enabled(true, true)
+	elif character is PlayerCharacter_Divide:
+		set_input_labels("Divide", "Command")
 
 
 func _on_character_character_split(character : PlayerCharacter):
-	if character.character_skill == PlayerCharacter.CHARACTER_SKILL.DIVIDE:
-		if character.split_character != null:
+	if character is PlayerCharacter_Divide:
+		if character.spawned_twin != null:
 			set_input_enabled(true, true)
 		else:
 			if character.is_skill_on:
