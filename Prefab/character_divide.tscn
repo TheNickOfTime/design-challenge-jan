@@ -1,11 +1,14 @@
-[gd_scene load_steps=4 format=3 uid="uid://dg17faj88yxbf"]
+[gd_scene load_steps=6 format=3 uid="uid://dg17faj88yxbf"]
 
 [ext_resource type="PackedScene" uid="uid://d15eqordyufmf" path="res://Prefab/character.tscn" id="1_brbtm"]
+[ext_resource type="Script" path="res://Scripts/Character/Character_Divide.gd" id="2_hkh3d"]
 [ext_resource type="PackedScene" uid="uid://camjrakssyc5r" path="res://Prefab/decoy_character.tscn" id="2_nw50r"]
+[ext_resource type="PackedScene" uid="uid://bp56fqwnike6l" path="res://Prefab/character_split.tscn" id="3_87b3e"]
 [ext_resource type="PackedScene" uid="uid://c450ukmygr4fq" path="res://Prefab/dummy_character.tscn" id="3_qdq2u"]
 
 [node name="Character_Divide" instance=ExtResource("1_brbtm")]
-character_skill = 2
-base_character = ExtResource("1_brbtm")
+script = ExtResource("2_hkh3d")
+twin_character = ExtResource("3_87b3e")
 decoy_character = ExtResource("2_nw50r")
 preview_character = ExtResource("3_qdq2u")
+character_skill = 2

@@ -92,6 +92,8 @@ func input_poll():
 
 # Character Functions-------------------------------------------------------------------------------
 func switch_character():
+	current_character.rotate_direction = Vector2.ZERO
+
 	# save previous values
 	camera_directions[character_index] = camera.transform
 
@@ -101,7 +103,8 @@ func switch_character():
 	setup_camera()
 
 	character_switch.emit(current_character)
-	current_character.character_split.emit(current_character)
+	if current_character is PlayerCharacter_Divide:
+		current_character.character_split.emit(current_character)
 
 
 func setup_player():
@@ -128,22 +131,28 @@ func update_nav_destination():
 
 
 func character_skill_primary():
-	match current_character.character_skill:
-		PlayerCharacter.CHARACTER_SKILL.GROW:
-			print("Growing")
-			current_character.grow_character(true)
-		PlayerCharacter.CHARACTER_SKILL.DIVIDE:
-			print("Dividing")
-			current_character.divide_character()
+	current_character.primary_skill()
+
+	# match current_character.character_skill:
+	# 	PlayerCharacter.CHARACTER_SKILL.GROW:
+	# 		print("Growing")
+	# 		current_character.grow_character(true)
+	# 	PlayerCharacter.CHARACTER_SKILL.DIVIDE:
+	# 		print("Dividing")
+	# 		current_character.divide_character()
 
 func character_skill_secondary():
-	match current_character.character_skill:
-		PlayerCharacter.CHARACTER_SKILL.GROW:
-			print("Flattening")
-			current_character.grow_character(false)
-		PlayerCharacter.CHARACTER_SKILL.DIVIDE:
-			print("Dividing")
-			current_character.command_twin(camera.get_position_from_raycast())
+	if current_character is PlayerCharacter_Divide:
+		current_character.twin_destination = camera.get_position_from_raycast()
+	current_character.secondary_skill()
+
+	# match current_character.character_skill:
+	# 	PlayerCharacter.CHARACTER_SKILL.GROW:
+	# 		print("Flattening")
+	# 		current_character.grow_character(false)
+	# 	PlayerCharacter.CHARACTER_SKILL.DIVIDE:
+	# 		print("Dividing")
+	# 		current_character.command_twin(camera.get_position_from_raycast())
 
 
 # Camera Functions----------------------------------------------------------------------------------
