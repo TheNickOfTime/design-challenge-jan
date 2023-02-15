@@ -77,6 +77,12 @@ func _input(event):
 	if can_move_camera:
 		if event is InputEventMouseMotion:
 			look_direction = event.relative
+	
+	if event is InputEventMouseButton:
+		print(event.button_index)
+		if (event as InputEventMouseButton).button_index == 1:
+			if Input.mouse_mode == Input.MOUSE_MODE_VISIBLE:
+				Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 
 
 func input_poll():

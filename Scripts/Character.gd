@@ -136,20 +136,25 @@ func divide_character():
 		$Temp_Body.position.y = 0.5
 		$CollisionShape3D.shape.height = 1.0
 		$CollisionShape3D.position.y = 0.5
-		
-		var tween_position = get_tree().create_tween()
-		tween_position.tween_property(self, "position", position + Vector3.UP, 0.25)
-		var tween_camera_offset = get_tree().create_tween()
-		var new_camera_offset = Vector3(0, 0.8, 0)
-		tween_camera_offset.tween_property(self, "camera_offset", new_camera_offset, 0.25)
-		await tween_position.finished
 
 		# Spawn dummy character
 		var dummy_character = preview_character.instantiate()
-		# dummy_character.position = starting_pos
 		dummy_character.transform = starting_trans
-		get_parent().add_child(dummy_character)
+		dummy_character.name = "Character_Dummy"
 		dummy_character.spawned_character.connect(_on_preview_character_spawned_character)
+		get_parent().add_child(dummy_character)
+
+		await get_tree().physics_frame
+		
+		var tween_position = get_tree().create_tween()
+		var tween_camera_offset = get_tree().create_tween()
+		var new_camera_offset = Vector3(0, 0.8, 0)
+		tween_position.tween_property(self, "position", position + Vector3.UP, 0.25)
+		tween_camera_offset.tween_property(self, "camera_offset", new_camera_offset, 0.25)
+		await tween_position.finished
+
+		dummy_character.get_node("Dummy_Body").collision_layer = self.collision_layer
+		dummy_character.get_node("Dummy_Body").collision_mask = self.collision_mask
 
 		var tween_body_scale = get_tree().create_tween()
 		tween_body_scale.tween_property(decoy_body, "scale", Vector3.ZERO, 0.25)
