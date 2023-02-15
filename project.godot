@@ -23,6 +23,7 @@ gdscript/warnings/unused_parameter=0
 
 window/size/viewport_width=1280
 window/size/viewport_height=720
+window/stretch/mode="canvas_items"
 
 [input]
 
@@ -83,6 +84,7 @@ skill_secondary={
 3d_physics/layer_3="Player"
 3d_physics/layer_4="Camera"
 3d_physics/layer_5="Beam"
+3d_physics/layer_6="Dummy"
 
 [rendering]
 

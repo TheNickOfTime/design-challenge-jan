@@ -26,24 +26,37 @@ base_character = ExtResource("2_6ffxn")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 shape = SubResource("CapsuleShape3D_pwp1g")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="."]
+[node name="Dummy_Body" type="RigidBody3D" parent="." groups=["Character"]]
+collision_layer = 32
+collision_mask = 3
+axis_lock_linear_x = true
+axis_lock_linear_y = true
+axis_lock_linear_z = true
+axis_lock_angular_x = true
+axis_lock_angular_y = true
+axis_lock_angular_z = true
+gravity_scale = 0.0
+sleeping = true
+lock_rotation = true
+freeze = true
+freeze_mode = 1
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Dummy_Body"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 mesh = SubResource("CapsuleMesh_oyeu5")
 skeleton = NodePath("../..")
 
-[node name="Temp_Arm_01" type="MeshInstance3D" parent="StaticBody3D/MeshInstance3D"]
+[node name="Temp_Arm_01" type="MeshInstance3D" parent="Dummy_Body/MeshInstance3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0, 0)
 mesh = SubResource("CapsuleMesh_yr2ff")
 skeleton = NodePath("../..")
 
-[node name="Temp_Arm_02" type="MeshInstance3D" parent="StaticBody3D/MeshInstance3D"]
+[node name="Temp_Arm_02" type="MeshInstance3D" parent="Dummy_Body/MeshInstance3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0, 0)
 mesh = SubResource("CapsuleMesh_yr2ff")
 skeleton = NodePath("../..")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Dummy_Body"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 shape = SubResource("CylinderShape3D_solm7")
 

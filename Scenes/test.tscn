@@ -77,6 +77,12 @@ _data = {
 }
 point_count = 2
 
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_lhq8o"]
+points = PackedVector3Array(0.25, 0.25, 0.125, 0.25, 0.25, -0.125, -0.25, 0.25, 0.125, 0.25, -0.25, 0.125, 0.25, -0.25, -0.125, -0.25, 0.25, -0.125, -0.25, -0.25, 0.125, -0.25, -0.25, -0.125)
+
+[sub_resource type="BoxMesh" id="BoxMesh_iop3r"]
+size = Vector3(0.5, 0.5, 0.25)
+
 [sub_resource type="Curve3D" id="Curve3D_8iwyr"]
 _data = {
 "points": PackedVector3Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -3, 0, 0, 0, 0, 0, 0, 0, 0, -3, 0, 5, 0, 0, 0, 0, 0, 0, -6, 0, 5),
@@ -84,11 +90,12 @@ _data = {
 }
 point_count = 4
 
-[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_lhq8o"]
-points = PackedVector3Array(0.25, 0.25, 0.125, 0.25, 0.25, -0.125, -0.25, 0.25, 0.125, 0.25, -0.25, 0.125, 0.25, -0.25, -0.125, -0.25, 0.25, -0.125, -0.25, -0.25, 0.125, -0.25, -0.25, -0.125)
-
-[sub_resource type="BoxMesh" id="BoxMesh_iop3r"]
-size = Vector3(0.5, 0.5, 0.25)
+[sub_resource type="Curve3D" id="Curve3D_5eudy"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 5, 0, 0, 0, 0, 0, 0, -2, 0, 5),
+"tilts": PackedFloat32Array(0, 0, 0, 0)
+}
+point_count = 4
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lxk3j"]
 transparency = 1
@@ -114,13 +121,6 @@ cap_top = false
 
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_lwhdt"]
 points = PackedVector3Array(0, -0.25, -0.5, -0.5, -0.25, 0, 0, 0.25, 0, 0.5, -0.25, 0, 0, -0.25, 0.5)
-
-[sub_resource type="Curve3D" id="Curve3D_5eudy"]
-_data = {
-"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 5, 0, 0, 0, 0, 0, 0, -2, 0, 5),
-"tilts": PackedFloat32Array(0, 0, 0, 0)
-}
-point_count = 4
 
 [node name="Node3D" type="Node3D"]
 
@@ -269,78 +269,81 @@ curve = SubResource("Curve3D_wnr2g")
 [node name="Triggerable_Door" parent="Group 4" instance=ExtResource("11_7x5cu")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 0.5, 15)
 
-[node name="Test_Cube" parent="." instance=ExtResource("11_q67xt")]
-process_mode = 4
-
-[node name="Trigger_Button" parent="." node_paths=PackedStringArray("triggerable", "power_line") instance=ExtResource("8_ilwf5")]
+[node name="Group_5" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.5, 0.5, 0)
+
+[node name="Trigger_Button" parent="Group_5" node_paths=PackedStringArray("triggerable", "power_line") instance=ExtResource("8_ilwf5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 triggerable = NodePath("../Triggerable_Beam")
-power_line = NodePath("../Power_Line")
+power_line = NodePath("../Power_Line_01")
 
-[node name="Power_Line" parent="." instance=ExtResource("9_pkmq6")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14, 0.5, 0)
-curve = SubResource("Curve3D_8iwyr")
-
-[node name="Trigger_Beam" type="Area3D" parent="." node_paths=PackedStringArray("triggerable", "power_line")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -21, 1, -4.5)
+[node name="Trigger_Beam" type="Area3D" parent="Group_5" node_paths=PackedStringArray("triggerable", "power_line")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.5, 0.5, -4.5)
 collision_layer = 17
 collision_mask = 16
 script = ExtResource("13_fhe6q")
 triggerable = NodePath("../Triggerable_Door")
-power_line = NodePath("../Power_Line2")
+power_line = NodePath("../Power_Line_02")
 trigger_method = 1
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Trigger_Beam"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Group_5/Trigger_Beam"]
 transform = Transform3D(0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 0, 0, 1, 0, 0, 0.125)
 shape = SubResource("ConvexPolygonShape3D_lhq8o")
 
-[node name="Mesh" type="StaticBody3D" parent="Trigger_Beam"]
+[node name="Mesh" type="StaticBody3D" parent="Group_5/Trigger_Beam"]
 collision_layer = 17
 collision_mask = 16
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Trigger_Beam/Mesh"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Group_5/Trigger_Beam/Mesh"]
 transform = Transform3D(0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 0, 0, 1, 0, 0, 0.125)
 mesh = SubResource("BoxMesh_iop3r")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Trigger_Beam/Mesh"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Group_5/Trigger_Beam/Mesh"]
 transform = Transform3D(0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 0, 0, 1, 0, 0, 0.125)
 shape = SubResource("ConvexPolygonShape3D_lhq8o")
 
-[node name="Triggerable_Beam" type="Node3D" parent="."]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -21, 1, 4.5)
+[node name="Power_Line_01" parent="Group_5" instance=ExtResource("9_pkmq6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 0, 0)
+curve = SubResource("Curve3D_8iwyr")
+
+[node name="Power_Line_02" parent="Group_5" instance=ExtResource("9_pkmq6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.5033, 0.00169301, -4.99726)
+curve = SubResource("Curve3D_5eudy")
+
+[node name="Triggerable_Beam" type="Node3D" parent="Group_5"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -9.5, 0.5, 4.5)
 script = ExtResource("13_ddtbi")
 
-[node name="Beam" type="Area3D" parent="Triggerable_Beam" groups=["Beam"]]
+[node name="Beam" type="Area3D" parent="Group_5/Triggerable_Beam" groups=["Beam"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.5)
 collision_layer = 16
 collision_mask = 6
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Triggerable_Beam/Beam"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Group_5/Triggerable_Beam/Beam"]
 mesh = SubResource("BoxMesh_v4uyk")
 skeleton = NodePath("../../Beam_Origin")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Triggerable_Beam/Beam"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Group_5/Triggerable_Beam/Beam"]
 shape = SubResource("BoxShape3D_5wxkn")
 
-[node name="Beam_Origin" type="StaticBody3D" parent="Triggerable_Beam"]
+[node name="Beam_Origin" type="StaticBody3D" parent="Group_5/Triggerable_Beam"]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Triggerable_Beam/Beam_Origin"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Group_5/Triggerable_Beam/Beam_Origin"]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, -0.25)
 mesh = SubResource("CylinderMesh_h6k7t")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Triggerable_Beam/Beam_Origin"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Group_5/Triggerable_Beam/Beam_Origin"]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, -0.25)
 shape = SubResource("ConvexPolygonShape3D_lwhdt")
 
-[node name="RayCast3D" type="RayCast3D" parent="Triggerable_Beam"]
+[node name="RayCast3D" type="RayCast3D" parent="Group_5/Triggerable_Beam"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.5)
 target_position = Vector3(0, 0, 9)
 collision_mask = 22
 
-[node name="Triggerable_Door" parent="." instance=ExtResource("11_7x5cu")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -23, 0.5, 0)
+[node name="Triggerable_Door" parent="Group_5" instance=ExtResource("11_7x5cu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.5, 0, 0)
 
-[node name="Power_Line2" parent="." instance=ExtResource("9_pkmq6")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20.0033, 0.501693, -4.99726)
-curve = SubResource("Curve3D_5eudy")
+[node name="Test_Cube" parent="." instance=ExtResource("11_q67xt")]
+process_mode = 4
