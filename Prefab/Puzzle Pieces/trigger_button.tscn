@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3]
+[gd_scene load_steps=10 format=3 uid="uid://c611uhpms0yfn"]
 
 [ext_resource type="Script" path="res://Scripts/Puzzle Pieces/Triggers/Trigger_Button.gd" id="1_1riqd"]
 
@@ -61,10 +61,9 @@ _data = {
 }
 
 [node name="Trigger_Button" type="Area3D" node_paths=PackedStringArray("triggerable")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.1, 0.5, 0)
 collision_mask = 38
 script = ExtResource("1_1riqd")
-triggerable = NodePath("../Node3D")
+triggerable = NodePath("")
 trigger_method = 0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]

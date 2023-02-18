@@ -29,6 +29,8 @@ var nav_destination : Vector3
 var can_move : bool = true
 var can_use_skill : bool = true
 
+var character_region : CharacterRegion
+
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 

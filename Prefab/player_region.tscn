@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3 uid="uid://5306eha3phva"]
+
+[ext_resource type="Script" path="res://Scripts/Character_Region.gd" id="1_1oovi"]
+
+[node name="Player_Region" type="Area3D"]
+collision_layer = 64
+collision_mask = 4
+script = ExtResource("1_1oovi")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]

@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://bl1fwggnp6sb6"]
+
+[ext_resource type="Script" path="res://Scripts/Controller.gd" id="1_e554h"]
+
+[node name="Controller" type="Node3D" node_paths=PackedStringArray("hud")]
+script = ExtResource("1_e554h")
+hud = NodePath("")
