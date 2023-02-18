@@ -8,9 +8,12 @@ class_name HUD
 @onready var secondary_input_button : Button = $InputPrompts/Secondary/Button
 @onready var secondary_input_label : Label = $InputPrompts/Secondary/Label
 
+@onready var switch_prompt_button : Button = $SwitchPrompt/Button
+@onready var switch_prompt_label : Label = $SwitchPrompt/Label
+
 
 func _ready():
-	pass
+	Controller.hud = self
 
 
 func set_input_labels (primary : String, secondary : String):
@@ -26,6 +29,10 @@ func set_input_enabled(primary : bool, secondary : bool):
 	var secondary_color : Color = Color.WHITE if secondary else Color.WEB_GRAY
 	primary_input_label.add_theme_color_override("font_color", primary_color)
 	secondary_input_label.add_theme_color_override("font_color", secondary_color)
+
+func set_switch_enabled(is_enabled : bool):
+	switch_prompt_button .disabled = !is_enabled
+	switch_prompt_label.add_theme_color_override("font_color", Color.WHITE if is_enabled else Color.WEB_GRAY)
 
 
 func _on_controller_character_switch(character : PlayerCharacter):
@@ -45,3 +52,7 @@ func _on_character_character_split(character : PlayerCharacter):
 				set_input_enabled(false, false)
 			else:
 				set_input_enabled(true, false)
+
+
+func _on_character_region_changed(is_same_region : bool):
+	set_switch_enabled(is_same_region)

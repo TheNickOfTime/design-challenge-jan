@@ -3,8 +3,9 @@ class_name PlayerController
 
 
 signal character_switch(character : PlayerCharacter)
+signal character_region_changed(is_same : bool)
 
-@export var hud : HUD
+var hud : HUD
 
 var characters : Array[Node]
 var camera : PlayerCamera
@@ -16,6 +17,7 @@ var look_direction : Vector2 = Vector2.ZERO
 
 var can_move_character : bool = false
 var can_move_camera : bool = false
+var can_switch_character : bool = true
 
 var current_character: PlayerCharacter:
 	get:
@@ -28,6 +30,10 @@ var other_character: PlayerCharacter:
 
 
 #Built In Functions---------------------------------------------------------------------------------
+func _init():
+	pass
+
+
 func _ready():
 	characters = get_tree().get_nodes_in_group("Character")
 	camera = get_tree().get_first_node_in_group("Camera")
@@ -42,7 +48,10 @@ func _ready():
 
 	character_switch.connect(hud._on_controller_character_switch)
 	other_character.character_split.connect(hud._on_character_character_split)
+	character_region_changed.connect(hud._on_character_region_changed)
+
 	character_switch.emit(current_character)
+	check_character_regions()
 
 	can_move_character = true
 	can_move_camera = true
@@ -92,6 +101,8 @@ func input_poll():
 
 # Character Functions-------------------------------------------------------------------------------
 func switch_character():
+	if !can_switch_character: return
+
 	current_character.rotate_direction = Vector2.ZERO
 
 	# save previous values
@@ -133,36 +144,25 @@ func update_nav_destination():
 func character_skill_primary():
 	current_character.primary_skill()
 
-	# match current_character.character_skill:
-	# 	PlayerCharacter.CHARACTER_SKILL.GROW:
-	# 		print("Growing")
-	# 		current_character.grow_character(true)
-	# 	PlayerCharacter.CHARACTER_SKILL.DIVIDE:
-	# 		print("Dividing")
-	# 		current_character.divide_character()
-
 func character_skill_secondary():
 	if current_character is PlayerCharacter_Divide:
 		current_character.twin_destination = camera.get_position_from_raycast()
 	current_character.secondary_skill()
 
-	# match current_character.character_skill:
-	# 	PlayerCharacter.CHARACTER_SKILL.GROW:
-	# 		print("Flattening")
-	# 		current_character.grow_character(false)
-	# 	PlayerCharacter.CHARACTER_SKILL.DIVIDE:
-	# 		print("Dividing")
-	# 		current_character.command_twin(camera.get_position_from_raycast())
+
+func check_character_regions():
+	var is_same_region : bool = current_character.character_region == other_character.character_region
+	character_region_changed.emit(is_same_region)
+	can_switch_character = is_same_region
+	print(is_same_region)
 
 
 # Camera Functions----------------------------------------------------------------------------------
 func setup_camera():
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	camera.character = current_character
-	# camera.global_rotation = current_character.global_rotation
-	if camera_directions[character_index] != null:
-
-		camera.transform = camera_directions[character_index]
+	camera.global_rotation.y = current_character.global_rotation.y
+	camera.global_rotation.z = current_character.global_rotation.z
 
 
 func update_camera():
