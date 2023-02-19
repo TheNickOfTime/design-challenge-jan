@@ -16,7 +16,6 @@ collision_mask = 7
 axis_lock_angular_x = true
 axis_lock_angular_z = true
 script = ExtResource("1_rpsyi")
-character_skill = 0
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
 agent_height_offset = 0.4
@@ -27,14 +26,17 @@ shape = SubResource("CapsuleShape3D_mapii")
 
 [node name="Temp_Body" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+gi_mode = 2
 mesh = SubResource("CapsuleMesh_kj4po")
 
 [node name="Temp_Arm_01" type="MeshInstance3D" parent="Temp_Body"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0, 0)
+gi_mode = 2
 mesh = SubResource("CapsuleMesh_rufeg")
 skeleton = NodePath("../..")
 
 [node name="Temp_Arm_02" type="MeshInstance3D" parent="Temp_Body"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0, 0)
+gi_mode = 2
 mesh = SubResource("CapsuleMesh_rufeg")
 skeleton = NodePath("../..")

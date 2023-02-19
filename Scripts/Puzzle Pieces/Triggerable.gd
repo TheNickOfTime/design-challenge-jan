@@ -3,6 +3,7 @@ class_name Triggerable
 
 
 @export var is_activated : bool = false
+var activator_count : int = 0
 
 
 func _ready():
@@ -15,13 +16,18 @@ func _process(delta):
 
 
 func _on_trigger_activated():
-	trigger_activated()
-	is_activated = true
+	activator_count += 1
+
+	if activator_count == 1:
+		trigger_activated()
+		is_activated = true
 
 
 func _on_trigger_deactivated():
-	trigger_deactivated()
-	is_activated = false
+	activator_count -= 1
+	if activator_count == 0:
+		trigger_deactivated()
+		is_activated = false
 
 
 func trigger_activated():

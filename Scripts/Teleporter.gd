@@ -37,6 +37,8 @@ func teleport_other_player(is_area_one : bool):
 	is_active = true
 	var character : PlayerCharacter = Controller.other_character
 	var new_transform = area_01.global_transform if !is_area_one else area_02.global_transform
+
+	PhysicsSmoother.add_exclude_node(character)
 	
 	var scale_down_tween = get_tree().create_tween()
 	scale_down_tween.tween_property(character, "scale", Vector3.ZERO, 0.25)
@@ -49,4 +51,5 @@ func teleport_other_player(is_area_one : bool):
 	scale_up_tween.tween_property(character, "scale", Vector3.ONE, 0.25)
 
 	await scale_up_tween.finished
+	PhysicsSmoother.remove_exclude_node(self)
 	# Controller.can_move_character = true
