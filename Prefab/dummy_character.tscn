@@ -1,7 +1,7 @@
-[gd_scene load_steps=7 format=3]
+[gd_scene load_steps=7 format=3 uid="uid://d16rllo6if7au"]
 
 [ext_resource type="Script" path="res://Scripts/Split_Preview.gd" id="1_s07hy"]
-[ext_resource type="PackedScene" path="res://Prefab/Character/character_twin.tscn" id="2_6ffxn"]
+[ext_resource type="PackedScene" uid="uid://sfffs5awnfb7" path="res://Prefab/Character/character_twin.tscn" id="2_6ffxn"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_pwp1g"]
 
@@ -16,7 +16,6 @@ height = 0.5
 height = 1.0
 
 [node name="Preview_Character" type="Area3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.25, 0)
 collision_layer = 2
 collision_mask = 4
 script = ExtResource("1_s07hy")
@@ -26,20 +25,14 @@ base_character = ExtResource("2_6ffxn")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 shape = SubResource("CapsuleShape3D_pwp1g")
 
-[node name="Dummy_Body" type="RigidBody3D" parent="." groups=["Character"]]
+[node name="Dummy_Body" type="StaticBody3D" parent="." groups=["Character"]]
 collision_layer = 32
-collision_mask = 3
 axis_lock_linear_x = true
 axis_lock_linear_y = true
 axis_lock_linear_z = true
 axis_lock_angular_x = true
 axis_lock_angular_y = true
 axis_lock_angular_z = true
-gravity_scale = 0.0
-sleeping = true
-lock_rotation = true
-freeze = true
-freeze_mode = 1
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Dummy_Body"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
@@ -57,6 +50,24 @@ mesh = SubResource("CapsuleMesh_yr2ff")
 skeleton = NodePath("../..")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Dummy_Body"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+shape = SubResource("CylinderShape3D_solm7")
+
+[node name="Dummy_Body2" type="RigidBody3D" parent="." groups=["Character"]]
+collision_layer = 32
+axis_lock_linear_x = true
+axis_lock_linear_y = true
+axis_lock_linear_z = true
+axis_lock_angular_x = true
+axis_lock_angular_y = true
+axis_lock_angular_z = true
+gravity_scale = 0.0
+sleeping = true
+lock_rotation = true
+freeze = true
+freeze_mode = 1
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Dummy_Body2"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 shape = SubResource("CylinderShape3D_solm7")
 

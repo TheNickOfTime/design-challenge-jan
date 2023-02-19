@@ -1,8 +1,11 @@
-[gd_scene load_steps=2 format=3]
+[gd_scene load_steps=3 format=3 uid="uid://2g3v4prx7m7h"]
 
-[ext_resource type="Texture2D" uid="uid://d0br3fgu8ujf1" path="res://Sprites/Dot_32x32.png" id="1_vpybc"]
+[ext_resource type="Texture2D" uid="uid://da0v6psn2jj73" path="res://Sprites/Dot_Albedo_64x64.png" id="1_2jv51"]
+[ext_resource type="Texture2D" uid="uid://cpo2h01tp8s71" path="res://Sprites/Dot_Emissive_64x64.png" id="2_xti8w"]
 
 [node name="Power_Line_Decal" type="Decal"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, 0.5, 0)
-extents = Vector3(0.15, 0.15, 0.15)
-texture_albedo = ExtResource("1_vpybc")
+size = Vector3(0.3, 0.3, 0.3)
+texture_albedo = ExtResource("1_2jv51")
+texture_emission = ExtResource("2_xti8w")
+emission_energy = 5.0

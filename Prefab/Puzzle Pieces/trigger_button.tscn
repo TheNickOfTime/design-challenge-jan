@@ -73,6 +73,7 @@ shape = SubResource("CylinderShape3D_cgv8b")
 [node name="Mesh_Button" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.15, 0)
 layers = 2
+gi_mode = 2
 mesh = SubResource("CylinderMesh_f2v42")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="."]
