@@ -123,6 +123,7 @@ script = ExtResource("1_djhr6")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.25, 0)
+layers = 2
 gi_mode = 2
 mesh = SubResource("BoxMesh_7d1by")
 

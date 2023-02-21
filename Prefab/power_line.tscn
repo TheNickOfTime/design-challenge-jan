@@ -1,10 +1,9 @@
 [gd_scene load_steps=3 format=3 uid="uid://m7n8akyxrtna"]
 
 [ext_resource type="Script" path="res://Scripts/Power_Line.gd" id="1_gyjqv"]
-[ext_resource type="PackedScene" path="res://Prefab/power_line_decal.tscn" id="2_owvgd"]
+[ext_resource type="PackedScene" uid="uid://2g3v4prx7m7h" path="res://Prefab/power_line_decal.tscn" id="2_owvgd"]
 
 [node name="Power_Line" type="Path3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, 0.5, 0)
 script = ExtResource("1_gyjqv")
 decal = ExtResource("2_owvgd")
 activated_color = Color(0, 1, 0, 1)

@@ -27,17 +27,18 @@ func _on_curve_changed():
 
 
 func update_decals():
-	for item in decals:
+	for item in get_children():
 		item.queue_free()
 	
 	decals.clear()
 
 	for i in (curve.get_baked_length() / decal_spacing + 1) as int:
 		var new_decal = decal.instantiate()
-		new_decal.position = curve.sample_baked(i / decal_spacing)
+		new_decal.transform = curve.sample_baked_with_rotation(i / decal_spacing)
 		new_decal.modulate = deactivated_color
 		decals.append(new_decal)
 		add_child(new_decal)
+
 
 func update_decal_colors(is_activated : bool, time : float):
 	if !is_activated:

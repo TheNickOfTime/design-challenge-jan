@@ -1,4 +1,5 @@
 extends Triggerable
+class_name Combiner
 
 
 signal combiner_activated
@@ -21,18 +22,28 @@ func _ready():
 	combiner_deactivated.connect(triggerable._on_trigger_deactivated)
 
 
+func _on_trigger_activated():
+	activator_count += 1
+	check_triggers()
+
+
+func _on_trigger_deactivated():
+	activator_count -= 1
+	check_triggers()
+
+
 func trigger_activated():
-	active_trigger_count += 1
+	# active_trigger_count += 1
 	check_triggers()
 
 
 func trigger_deactivated():
-	active_trigger_count -= 1
+	# active_trigger_count -= 1
 	check_triggers()
 
 
 func check_triggers():
-	if active_trigger_count == triggers.size():
+	if activator_count == triggers.size():
 		if !triggerable.is_activated:
 			combiner_activated.emit()
 			if power_line != null:
