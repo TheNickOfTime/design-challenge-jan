@@ -3,13 +3,27 @@ class_name PlayerCharacter_Divide
 
 
 signal character_split(character : PlayerCharacter)
+signal twin_out_of_range(is_in_range : bool)
 
 @export var twin_character : PackedScene
 @export var decoy_character : PackedScene
 @export var preview_character : PackedScene
 
-var spawned_twin : Node3D
+
+var spawned_twin : PlayerCharacter_Twin
 var twin_destination : Vector3
+var rejoin_distance : float = 12
+var can_rejoin : bool = true
+
+
+func _ready():
+	twin_out_of_range.connect(Controller.hud._on_twin_out_of_range)
+
+
+func _process(delta):
+	super(delta)
+	if spawned_twin != null:
+		update_twin_distance()
 
 
 func _on_preview_character_spawned_character(spawned_character : Node3D):
@@ -109,3 +123,15 @@ func command_twin():
 		(spawned_twin as PlayerCharacter).set_new_nav_destination(twin_destination)
 	else:
 		pass
+
+
+func update_twin_distance():
+	var distance = spawned_twin.global_position.distance_to(global_position)
+	var is_in_range : bool = distance <= rejoin_distance
+
+	spawned_twin.update_distance_label(distance, is_in_range)
+
+	if is_in_range != can_rejoin:
+		twin_out_of_range.emit(is_in_range)
+
+	can_rejoin = is_in_range

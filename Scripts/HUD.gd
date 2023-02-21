@@ -47,12 +47,19 @@ func _on_character_character_split(character : PlayerCharacter):
 	if character is PlayerCharacter_Divide:
 		if character.spawned_twin != null:
 			set_input_enabled(true, true)
+			set_input_labels("Rejoin", "Command")
 		else:
 			if character.is_skill_on:
 				set_input_enabled(false, false)
 			else:
 				set_input_enabled(true, false)
+			
+				set_input_labels("Divide", "Command")
 
 
 func _on_character_region_changed(is_same_region : bool):
 	set_switch_enabled(is_same_region)
+
+
+func _on_twin_out_of_range(is_in_range : bool):
+	set_input_enabled(is_in_range, !secondary_input_button.disabled)

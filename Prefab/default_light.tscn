@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://bx0kl8ei8xojq"]
+
+[node name="Default_Light_01" type="OmniLight3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 12.4, 0)
+light_size = 3.0
+light_bake_mode = 1
+omni_range = 100.0

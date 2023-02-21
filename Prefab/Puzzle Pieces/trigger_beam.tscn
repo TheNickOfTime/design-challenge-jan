@@ -1,0 +1,34 @@
+[gd_scene load_steps=4 format=3 uid="uid://dl5a7xprblfhl"]
+
+[ext_resource type="Script" path="res://Scripts/Puzzle Pieces/Triggers/Trigger_Beam.gd" id="1_vt3ib"]
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_lhq8o"]
+points = PackedVector3Array(0.25, 0.25, 0.125, 0.25, 0.25, -0.125, -0.25, 0.25, 0.125, 0.25, -0.25, 0.125, 0.25, -0.25, -0.125, -0.25, 0.25, -0.125, -0.25, -0.25, 0.125, -0.25, -0.25, -0.125)
+
+[sub_resource type="BoxMesh" id="BoxMesh_iop3r"]
+size = Vector3(0.5, 0.5, 0.25)
+
+[node name="Trigger_Beam" type="Area3D" node_paths=PackedStringArray("triggerable", "power_line")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.5, 0.5, -4.5)
+collision_layer = 17
+collision_mask = 16
+script = ExtResource("1_vt3ib")
+triggerable = NodePath("../Triggerable_Door")
+power_line = NodePath("../Power_Line_02")
+trigger_method = 1
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 0, 0, 1, 0, 0, 0.125)
+shape = SubResource("ConvexPolygonShape3D_lhq8o")
+
+[node name="Mesh" type="StaticBody3D" parent="."]
+collision_layer = 17
+collision_mask = 16
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Mesh"]
+transform = Transform3D(0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 0, 0, 1, 0, 0, 0.125)
+mesh = SubResource("BoxMesh_iop3r")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Mesh"]
+transform = Transform3D(0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 0, 0, 1, 0, 0, 0.125)
+shape = SubResource("ConvexPolygonShape3D_lhq8o")
