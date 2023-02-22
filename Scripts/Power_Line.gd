@@ -44,16 +44,18 @@ func update_decals():
 func update_decal_colors(is_activated : bool, time : float):
 	if !is_activated:
 		decals.reverse()
+
+	trigger_count += 1
 	
 	var color : Color = activated_color if is_activated else deactivated_color
 	var time_per : float = time / decals.size()
 	var initial_trigger_count : int = trigger_count
 
 	for item in decals:
-		item.modulate = color
-		await get_tree().create_timer(time_per).timeout
 		if trigger_count != initial_trigger_count:
 			break
+		item.modulate = color
+		await get_tree().create_timer(time_per).timeout
 	
 	if !is_activated:
 		decals.reverse()
