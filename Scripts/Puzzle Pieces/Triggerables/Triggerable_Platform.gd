@@ -18,8 +18,8 @@ func trigger_deactivated():
 
 
 func tween_platform(is_up : bool):
-#	if last_tween != null:
-#		last_tween.stop()
+	if last_tween != null:
+		last_tween.stop()
 	
 	var tween : Tween = get_tree().create_tween()
 	var destination : Vector3 = move_direction.normalized() * move_distance if is_up else Vector3.ZERO
