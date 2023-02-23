@@ -1,0 +1,90 @@
+[gd_scene load_steps=11 format=3 uid="uid://c2egda1lkcymp"]
+
+[ext_resource type="PackedScene" uid="uid://cvfphu3w742i6" path="res://Scenes/persistent.tscn" id="1_lxf3i"]
+[ext_resource type="Material" uid="uid://b30nyv8fik6a3" path="res://Materials/Prototype/material_prototype.tres" id="2_6pxmh"]
+[ext_resource type="PackedScene" uid="uid://015fbmlmx8p1" path="res://Prefab/Puzzle Pieces/triggerable_door.tscn" id="3_875ns"]
+[ext_resource type="PackedScene" uid="uid://dt14tafl7nv4j" path="res://Prefab/Puzzle Pieces/triggerable_beam.tscn" id="4_ii43r"]
+[ext_resource type="PackedScene" uid="uid://bidghdtl7jrw" path="res://Prefab/Character/character_shift.tscn" id="5_m84j1"]
+[ext_resource type="PackedScene" uid="uid://dl5a7xprblfhl" path="res://Prefab/Puzzle Pieces/trigger_beam.tscn" id="5_ythmg"]
+[ext_resource type="PackedScene" uid="uid://cu2yfwkdcruc0" path="res://Prefab/Character/character_divide.tscn" id="6_a3bp2"]
+[ext_resource type="PackedScene" uid="uid://dl6b4wfo7a1oq" path="res://Prefab/Puzzle Pieces/triggerable_dispenser.tscn" id="8_j12k4"]
+[ext_resource type="PackedScene" uid="uid://c611uhpms0yfn" path="res://Prefab/Puzzle Pieces/trigger_button.tscn" id="9_kc8r1"]
+
+[sub_resource type="NavigationMesh" id="NavigationMesh_2gab5"]
+vertices = PackedVector3Array(0, 0.2, -12, -12, 0.2, 0, -12, 0.2, 12, 0, 0.2, 12, 12, 0.2, 0, 12, 0.2, -12, 0, 0.2, 12, 12, 0.2, 12, 12, 0.2, 0, 0, 0.2, -12, -12, 0.2, -12, -12, 0.2, 0)
+polygons = [PackedInt32Array(5, 4, 0), PackedInt32Array(0, 4, 3), PackedInt32Array(0, 3, 1), PackedInt32Array(1, 3, 2), PackedInt32Array(8, 7, 6), PackedInt32Array(11, 10, 9)]
+cell_size = 0.1
+cell_height = 0.1
+agent_height = 1.0
+
+[node name="Level_03" type="Node3D"]
+
+[node name="Persistent" parent="." instance=ExtResource("1_lxf3i")]
+
+[node name="DirectionalLight3D" parent="Persistent" index="1"]
+visible = true
+
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
+navigation_mesh = SubResource("NavigationMesh_2gab5")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="NavigationRegion3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+use_collision = true
+size = Vector3(25, 1, 25)
+material = ExtResource("2_6pxmh")
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="NavigationRegion3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+use_collision = true
+size = Vector3(5, 4, 1)
+material = ExtResource("2_6pxmh")
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="NavigationRegion3D/CSGBox3D2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.75, 0)
+operation = 2
+size = Vector3(3, 2.5, 1)
+material = ExtResource("2_6pxmh")
+
+[node name="CSGBox3D4" type="CSGBox3D" parent="NavigationRegion3D/CSGBox3D2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+operation = 2
+size = Vector3(5, 1, 1)
+material = ExtResource("2_6pxmh")
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="NavigationRegion3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -6)
+use_collision = true
+size = Vector3(1, 2, 1)
+material = ExtResource("2_6pxmh")
+
+[node name="CSGBox3D4" type="CSGBox3D" parent="NavigationRegion3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 6)
+use_collision = true
+size = Vector3(1, 2, 1)
+material = ExtResource("2_6pxmh")
+
+[node name="Triggerable_Door" parent="." instance=ExtResource("3_875ns")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0.1)
+
+[node name="Triggerable_Beam" parent="." instance=ExtResource("4_ii43r")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, -5.5)
+is_activated = true
+
+[node name="Trigger_Beam" parent="." instance=ExtResource("5_ythmg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 5.25)
+
+[node name="Character_Shift" parent="." instance=ExtResource("5_m84j1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.5, 0, 6)
+
+[node name="Character_Divide" parent="." instance=ExtResource("6_a3bp2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.5, 0, -6)
+
+[node name="Triggerable_Dispenser" parent="." instance=ExtResource("8_j12k4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.5, 5, 0)
+is_activated = false
+
+[node name="Trigger_Button" parent="." node_paths=PackedStringArray("triggerable") instance=ExtResource("9_kc8r1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.5, 0, -3)
+triggerable = NodePath("../Triggerable_Dispenser")
+
+[editable path="Persistent"]

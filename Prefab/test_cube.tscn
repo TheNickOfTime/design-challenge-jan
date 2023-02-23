@@ -1,11 +1,13 @@
-[gd_scene load_steps=3 format=3 uid="uid://pdjldor3u1"]
+[gd_scene load_steps=4 format=3 uid="uid://pdjldor3u1"]
+
+[ext_resource type="Material" uid="uid://ceyvtwdltjnj" path="res://Materials/Prototype/material_prototype_light.tres" id="1_eh2mq"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_6jwoy"]
+material = ExtResource("1_eh2mq")
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_r60oh"]
 
 [node name="Test_Cube" type="RigidBody3D" groups=["Foreground"]]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.5, 8, 2.08165e-12)
 collision_layer = 2
 collision_mask = 7
 
