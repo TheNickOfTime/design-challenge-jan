@@ -47,7 +47,7 @@ func _physics_process(delta):
 	
 	match control_state:
 		CONTROL_STATE.NONE:
-			velocity = Vector3.ZERO + additional_forces
+			# velocity = velocity + additional_forces
 			move_and_slide()
 		CONTROL_STATE.INPUT:
 			move_input(move_direction, delta)
@@ -83,7 +83,7 @@ func move_nav():
 		velocity = direction * move_speed
 
 		# rotate_direction = Vector2(direction.x, direction.z).normalized()
-		look_at(next_position)
+		look_at(Vector3(next_position.x, position.y, next_position.z))
 	else:
 		velocity = Vector3.ZERO
 	

@@ -135,3 +135,5 @@ shape = SubResource("BoxShape3D_ur14t")
 libraries = {
 "": SubResource("AnimationLibrary_ult5d")
 }
+
+[node name="NavigationObstacle3D" type="NavigationObstacle3D" parent="."]

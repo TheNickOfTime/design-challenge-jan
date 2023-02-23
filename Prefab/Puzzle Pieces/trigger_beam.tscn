@@ -9,7 +9,6 @@ points = PackedVector3Array(0.25, 0.25, 0.125, 0.25, 0.25, -0.125, -0.25, 0.25, 
 size = Vector3(0.5, 0.5, 0.25)
 
 [node name="Trigger_Beam" type="Area3D" node_paths=PackedStringArray("triggerable", "power_line")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.5, 0.5, -4.5)
 collision_layer = 17
 collision_mask = 16
 script = ExtResource("1_vt3ib")

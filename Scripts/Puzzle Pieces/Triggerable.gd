@@ -8,6 +8,7 @@ var activator_count : int = 0
 
 func _ready():
 	if is_activated:
+		await get_tree().process_frame
 		trigger_activated()
 
 

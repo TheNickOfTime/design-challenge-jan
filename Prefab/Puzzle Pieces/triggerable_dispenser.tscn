@@ -1,0 +1,30 @@
+[gd_scene load_steps=3 format=3 uid="uid://dl6b4wfo7a1oq"]
+
+[ext_resource type="Script" path="res://Scripts/Puzzle Pieces/Triggerables/Triggerable_Dispenser.gd" id="1_f3u3y"]
+[ext_resource type="PackedScene" uid="uid://pdjldor3u1" path="res://Prefab/test_cube.tscn" id="2_m2lpu"]
+
+[node name="Triggerable_Dispenser" type="Node3D"]
+script = ExtResource("1_f3u3y")
+cube = ExtResource("2_m2lpu")
+is_activated = true
+
+[node name="Spawn_Point" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+
+[node name="Body" type="CSGCylinder3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.25, 0)
+use_collision = true
+radius = 1.25
+height = 0.5
+sides = 24
+
+[node name="CSGCylinder3D2" type="CSGCylinder3D" parent="Body"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+radius = 1.0
+height = 0.5
+sides = 24
+
+[node name="CSGBox3D" type="CSGBox3D" parent="Body"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.75, 0)
+operation = 2
+size = Vector3(1.1, 1.1, 1.1)
