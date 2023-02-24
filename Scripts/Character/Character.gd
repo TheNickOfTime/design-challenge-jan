@@ -11,6 +11,7 @@ enum CHARACTER_SKILL {NONE, GROW, DIVIDE}
 # On Ready Vars-------------------------------------------------------------------------------------
 @onready var nav_agent : NavigationAgent3D = $NavigationAgent3D
 @onready var default_camera_offset : Vector3 = camera_offset
+@onready var carry_point : Node3D = $Carry_Point
 
 # Member Vars---------------------------------------------------------------------------------------
 var control_state : CONTROL_STATE
@@ -30,6 +31,9 @@ var can_move : bool = true
 var can_use_skill : bool = true
 
 var character_region : CharacterRegion
+
+var interactable : Interactable
+var carried_item : Node3D
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
@@ -108,3 +112,46 @@ func primary_skill():
 
 func secondary_skill():
 	printerr("This needs to be overridden to have any functionality")
+
+
+func interact():
+	if interactable != null:
+		interactable._on_interact(self)
+	elif carried_item != null:
+		drop_carried_item()
+
+
+func set_carried_item(item : Node3D):
+	item.get_parent().remove_child(item)
+	carry_point.add_child(item)
+
+	item.position = Vector3.ZERO
+	item.rotation = Vector3.ZERO
+
+	if item is RigidBody3D:
+		item.freeze = true
+
+	carried_item = item
+
+
+func drop_carried_item():
+	var shrink_tween : Tween = get_tree().create_tween()
+	shrink_tween.tween_property(carried_item, "scale", Vector3.ZERO, 0.25)
+	
+	await shrink_tween.finished
+	carry_point.remove_child(carried_item)
+	get_parent().add_child(carried_item)
+	carried_item.global_position = global_position + basis.z * -1.5
+	carried_item.global_position.y += 2
+
+	var grow_tween : Tween = get_tree().create_tween()
+	grow_tween.tween_property(carried_item, "scale", Vector3.ONE, 0.25)
+	
+	if carried_item is Interactable:
+		print("shitty")
+		carried_item.set_interact_enabled(true)
+
+	if carried_item is RigidBody3D:
+		carried_item.freeze = false
+	
+	carried_item = null

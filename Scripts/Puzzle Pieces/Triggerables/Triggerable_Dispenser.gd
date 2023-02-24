@@ -8,6 +8,11 @@ var spawned_cube : RigidBody3D
 @onready var spawn_point : Node3D = $Spawn_Point
 
 
+func _process(delta):
+	if is_activated && spawned_cube == null:
+		trigger_activated()
+
+
 func trigger_activated():
 	var old_cube : RigidBody3D = spawned_cube
 	var new_cube : RigidBody3D = cube.instantiate()
