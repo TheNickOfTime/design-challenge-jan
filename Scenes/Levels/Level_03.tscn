@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://c2egda1lkcymp"]
+[gd_scene load_steps=13 format=3 uid="uid://c2egda1lkcymp"]
 
 [ext_resource type="PackedScene" uid="uid://cvfphu3w742i6" path="res://Scenes/persistent.tscn" id="1_lxf3i"]
 [ext_resource type="Material" uid="uid://b30nyv8fik6a3" path="res://Materials/Prototype/material_prototype.tres" id="2_6pxmh"]
@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://cu2yfwkdcruc0" path="res://Prefab/Character/character_divide.tscn" id="6_a3bp2"]
 [ext_resource type="PackedScene" uid="uid://dl6b4wfo7a1oq" path="res://Prefab/Puzzle Pieces/triggerable_dispenser.tscn" id="8_j12k4"]
 [ext_resource type="PackedScene" uid="uid://c611uhpms0yfn" path="res://Prefab/Puzzle Pieces/trigger_button.tscn" id="9_kc8r1"]
+[ext_resource type="Script" path="res://Scripts/Cube_Killer.gd" id="10_xeo3j"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_2gab5"]
 vertices = PackedVector3Array(0, 0.2, -12, -12, 0.2, 0, -12, 0.2, 12, 0, 0.2, 12, 12, 0.2, 0, 12, 0.2, -12, 0, 0.2, 12, 12, 0.2, 12, 12, 0.2, 0, 0, 0.2, -12, -12, 0.2, -12, -12, 0.2, 0)
@@ -16,6 +17,9 @@ polygons = [PackedInt32Array(5, 4, 0), PackedInt32Array(0, 4, 3), PackedInt32Arr
 cell_size = 0.1
 cell_height = 0.1
 agent_height = 1.0
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_qb302"]
+size = Vector3(1.5, 1, 1.5)
 
 [node name="Level_03" type="Node3D"]
 
@@ -31,6 +35,12 @@ navigation_mesh = SubResource("NavigationMesh_2gab5")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
 use_collision = true
 size = Vector3(25, 1, 25)
+material = ExtResource("2_6pxmh")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="NavigationRegion3D/CSGBox3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.5, 0, 0)
+operation = 2
+size = Vector3(1.5, 1.5, 1.5)
 material = ExtResource("2_6pxmh")
 
 [node name="CSGBox3D2" type="CSGBox3D" parent="NavigationRegion3D"]
@@ -86,5 +96,14 @@ is_activated = false
 [node name="Trigger_Button" parent="." node_paths=PackedStringArray("triggerable") instance=ExtResource("9_kc8r1")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.5, 0, -3)
 triggerable = NodePath("../Triggerable_Dispenser")
+
+[node name="Cube_Killer" type="Area3D" parent="."]
+collision_layer = 64
+collision_mask = 2
+script = ExtResource("10_xeo3j")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Cube_Killer"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.5, -0.5, 0)
+shape = SubResource("BoxShape3D_qb302")
 
 [editable path="Persistent"]

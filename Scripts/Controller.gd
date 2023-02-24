@@ -74,8 +74,8 @@ func _input(event):
 		if event.is_action_pressed("character_switch"):
 			switch_character()
 		
-		if event.is_action_pressed("character_command"):
-			update_nav_destination()
+		if event.is_action_pressed("character_interact"):
+			current_character.interact()
 		
 		if event.is_action_pressed("skill_primary"):
 			character_skill_primary()
