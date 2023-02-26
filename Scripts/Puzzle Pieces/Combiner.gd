@@ -23,12 +23,12 @@ func _ready():
 
 
 func _on_trigger_activated():
-	activator_count += 1
+	activator_count += 1 if !is_inverted else -1
 	check_triggers()
 
 
 func _on_trigger_deactivated():
-	activator_count -= 1
+	activator_count -= 1 if !is_inverted else -1
 	check_triggers()
 
 
@@ -43,7 +43,8 @@ func trigger_deactivated():
 
 
 func check_triggers():
-	if activator_count == triggers.size():
+	print(activator_count)
+	if !is_inverted && activator_count == triggers.size() || is_inverted && activator_count == 0:
 		if !triggerable.is_activated:
 			combiner_activated.emit()
 			if power_line != null:

@@ -61,7 +61,7 @@ func set_beam(is_active : bool):
 
 func update_beam_parameters():
 	beam_end_point = raycast.get_collision_point()
-	beam_length = beam_end_point.distance_to(global_position + beam_offset) 
+	beam_length = beam_end_point.distance_to(global_position + beam_offset + Vector3(0, 0 , -0.1)) 
 	beam_center = beam_length / 2
 	# print(raycast.get_collider())
 

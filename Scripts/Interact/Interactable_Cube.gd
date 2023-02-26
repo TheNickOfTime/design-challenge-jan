@@ -1,6 +1,10 @@
 extends Interactable
 
 
+func is_player(body : Node3D) -> bool:
+	return body == (Controller.current_character as Node3D) and body is PlayerCharacter_Shift
+
+
 func _on_interact(character : PlayerCharacter):
 	if self as Node3D is RigidBody3D:
 		(self as Node3D as RigidBody3D).freeze = true

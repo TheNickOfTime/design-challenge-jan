@@ -1,6 +1,5 @@
-[gd_scene load_steps=6 format=3 uid="uid://cvfphu3w742i6"]
+[gd_scene load_steps=5 format=3 uid="uid://cvfphu3w742i6"]
 
-[ext_resource type="PackedScene" uid="uid://dufv3576nm313" path="res://Prefab/camera.tscn" id="2_b7bni"]
 [ext_resource type="PackedScene" uid="uid://ci7ws2fr51662" path="res://UI/hud.tscn" id="3_fow4q"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_kgf5a"]
@@ -28,7 +27,5 @@ environment = SubResource("Environment_eibk7")
 transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
 visible = false
 shadow_enabled = true
-
-[node name="Camera" parent="." instance=ExtResource("2_b7bni")]
 
 [node name="HUD" parent="." instance=ExtResource("3_fow4q")]

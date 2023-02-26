@@ -30,17 +30,19 @@ var other_character: PlayerCharacter:
 
 
 #Built In Functions---------------------------------------------------------------------------------
-func _init():
-	pass
+func _enter_tree():
+	characters.resize(2)
 
 
 func _ready():
-	characters = get_tree().get_nodes_in_group("Character")
+	# characters = get_tree().get_nodes_in_group("Character")
 	camera = get_tree().get_first_node_in_group("Camera")
 	camera_directions.resize(2)
 	for i in camera_directions.size():
 		camera_directions[i] = camera.transform
 	
+	await get_tree().process_frame
+
 	setup_player()
 	setup_camera()
 	

@@ -15,6 +15,23 @@ size = Vector3(0.25, 0.5, 0.25)
 [sub_resource type="BoxMesh" id="BoxMesh_xf20p"]
 size = Vector3(0.25, 0.5, 0.25)
 
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_ejelp"]
+animation = &"flatten"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_c43gc"]
+animation = &"RESET"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_omd0w"]
+animation = &"grow"
+
+[sub_resource type="AnimationNodeBlendSpace1D" id="AnimationNodeBlendSpace1D_7jsj3"]
+blend_point_0/node = SubResource("AnimationNodeAnimation_ejelp")
+blend_point_0/pos = -1.0
+blend_point_1/node = SubResource("AnimationNodeAnimation_c43gc")
+blend_point_1/pos = 0.0
+blend_point_2/node = SubResource("AnimationNodeAnimation_omd0w")
+blend_point_2/pos = 1.0
+
 [sub_resource type="Animation" id="Animation_brquv"]
 length = 0.001
 tracks/0/type = "value"
@@ -88,6 +105,18 @@ tracks/5/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [Vector3(0, 1, 0)]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("Carry_Point:position")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 2.6, 0)]
 }
 
 [sub_resource type="Animation" id="Animation_yopm6"]
@@ -165,6 +194,18 @@ tracks/5/keys = {
 "update": 0,
 "values": [Vector3(0, 0.5, 0)]
 }
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("Carry_Point:position")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 1.6, 0)]
+}
 
 [sub_resource type="Animation" id="Animation_5ke4m"]
 resource_name = "grow"
@@ -240,6 +281,18 @@ tracks/5/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [Vector3(0, 1.5, 0)]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("Carry_Point:position")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 3.6, 0)]
 }
 
 [sub_resource type="Animation" id="Animation_tv7k3"]
@@ -480,23 +533,6 @@ _data = {
 "normal_to_grow": SubResource("Animation_tq6dy")
 }
 
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_ejelp"]
-animation = &"flatten"
-
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_c43gc"]
-animation = &"RESET"
-
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_omd0w"]
-animation = &"grow"
-
-[sub_resource type="AnimationNodeBlendSpace1D" id="AnimationNodeBlendSpace1D_7jsj3"]
-blend_point_0/node = SubResource("AnimationNodeAnimation_ejelp")
-blend_point_0/pos = -1.0
-blend_point_1/node = SubResource("AnimationNodeAnimation_c43gc")
-blend_point_1/pos = 0.0
-blend_point_2/node = SubResource("AnimationNodeAnimation_omd0w")
-blend_point_2/pos = 1.0
-
 [node name="Character_Shift" instance=ExtResource("1_6fgee")]
 script = ExtResource("2_btu5p")
 
@@ -512,13 +548,16 @@ mesh = SubResource("BoxMesh_fp6iq")
 [node name="Temp_Arm_02" parent="Temp_Body" index="1"]
 mesh = SubResource("BoxMesh_xf20p")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="3"]
-libraries = {
-"": SubResource("AnimationLibrary_ppeh2")
-}
+[node name="Carry_Point" type="Node3D" parent="." index="3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.6, 0)
 
 [node name="AnimationTree" type="AnimationTree" parent="." index="4"]
 tree_root = SubResource("AnimationNodeBlendSpace1D_7jsj3")
 anim_player = NodePath("../AnimationPlayer")
 active = true
 parameters/blend_position = 0.0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="5"]
+libraries = {
+"": SubResource("AnimationLibrary_ppeh2")
+}

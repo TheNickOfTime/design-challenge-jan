@@ -1,0 +1,101 @@
+[gd_scene load_steps=8 format=3 uid="uid://bag2rnpnpx7ap"]
+
+[ext_resource type="Script" path="res://Scripts/Loading_Room.gd" id="1_edh47"]
+[ext_resource type="PackedScene" uid="uid://bx0kl8ei8xojq" path="res://Prefab/default_light.tscn" id="2_qd10d"]
+[ext_resource type="Material" uid="uid://b30nyv8fik6a3" path="res://Materials/Prototype/material_prototype.tres" id="3_oegv0"]
+[ext_resource type="Material" uid="uid://ceyvtwdltjnj" path="res://Materials/Prototype/material_prototype_light.tres" id="4_cpw1t"]
+[ext_resource type="PackedScene" uid="uid://015fbmlmx8p1" path="res://Prefab/Puzzle Pieces/triggerable_door.tscn" id="5_q4hhf"]
+[ext_resource type="PackedScene" uid="uid://dbtfg3lnlg0mg" path="res://Prefab/teleporter.tscn" id="6_cslfq"]
+
+[sub_resource type="NavigationMesh" id="NavigationMesh_gxi0t"]
+vertices = PackedVector3Array(1.25, 0.75, -4.25, 1, 1, -5, -0.75, 1, -5, -1.25, 0.75, -4.25, -1, 0.75, 4.5, -1.25, 0.75, -4.25, -4.25, 0.75, -4.25, -4.25, 0.75, 4.5, -1, 0.75, 4.5, -1, 0.75, 4.5, -0.75, 0.75, 5, 4.5, 0.75, 4.5, 4.5, 0.75, -4.25, 1.25, 0.75, -4.25, -4.75, 15.25, -4.5, -4.75, 15.25, 4.75, 4.5, 15.25, 4.75, 4.5, 15.25, -4.5)
+polygons = [PackedInt32Array(1, 0, 2), PackedInt32Array(2, 0, 3), PackedInt32Array(3, 0, 4), PackedInt32Array(6, 5, 7), PackedInt32Array(7, 5, 8), PackedInt32Array(10, 9, 11), PackedInt32Array(11, 9, 13), PackedInt32Array(11, 13, 12), PackedInt32Array(17, 16, 14), PackedInt32Array(14, 16, 15)]
+
+[node name="Loading_Room" type="Node3D"]
+script = ExtResource("1_edh47")
+
+[node name="Default_Light_01" parent="." instance=ExtResource("2_qd10d")]
+transform = Transform3D(1, 8.73752e-09, 1.39698e-09, 2.07365e-10, 1, 4.19095e-09, 0, 0, 1, 0.00313075, 9, -0.00657654)
+
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
+navigation_mesh = SubResource("NavigationMesh_gxi0t")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="NavigationRegion3D"]
+use_collision = true
+size = Vector3(10, 1, 10)
+material = ExtResource("3_oegv0")
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="NavigationRegion3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.5, 2, 0)
+use_collision = true
+size = Vector3(1, 4, 11)
+material = ExtResource("3_oegv0")
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="NavigationRegion3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.5, 2, 0)
+use_collision = true
+size = Vector3(1, 4, 11)
+material = ExtResource("3_oegv0")
+
+[node name="CSGBox3D4" type="CSGBox3D" parent="NavigationRegion3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, -5.25)
+use_collision = true
+size = Vector3(10, 4, 0.5)
+material = ExtResource("3_oegv0")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="NavigationRegion3D/CSGBox3D4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.25, 0)
+operation = 2
+size = Vector3(3, 2.5, 0.5)
+material = ExtResource("3_oegv0")
+
+[node name="CSGBox3D5" type="CSGBox3D" parent="NavigationRegion3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 5.25)
+use_collision = true
+size = Vector3(10, 4, 0.5)
+material = ExtResource("3_oegv0")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="NavigationRegion3D/CSGBox3D5"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.25, 0)
+operation = 2
+size = Vector3(3, 2.5, 0.5)
+material = ExtResource("3_oegv0")
+
+[node name="CSGBox3D6" type="CSGBox3D" parent="NavigationRegion3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.5, 9, 0)
+use_collision = true
+size = Vector3(1, 10, 11)
+material = ExtResource("4_cpw1t")
+
+[node name="CSGBox3D7" type="CSGBox3D" parent="NavigationRegion3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.5, 9, 0)
+use_collision = true
+size = Vector3(1, 10, 11)
+material = ExtResource("4_cpw1t")
+
+[node name="CSGBox3D8" type="CSGBox3D" parent="NavigationRegion3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 9, -5.25)
+use_collision = true
+size = Vector3(10, 10, 0.5)
+material = ExtResource("4_cpw1t")
+
+[node name="CSGBox3D9" type="CSGBox3D" parent="NavigationRegion3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 9, 5.25)
+use_collision = true
+size = Vector3(10, 10, 0.5)
+material = ExtResource("4_cpw1t")
+
+[node name="CSGBox3D10" type="CSGBox3D" parent="NavigationRegion3D"]
+transform = Transform3D(1, 1.88265e-10, -4.65661e-10, 2.68301e-10, 0.999999, 0, 0, 5.82077e-10, 0.999999, -0.0133516, 14.5, 0.0280266)
+use_collision = true
+size = Vector3(10, 1, 10)
+material = ExtResource("3_oegv0")
+
+[node name="Triggerable_Door_01" parent="." instance=ExtResource("5_q4hhf")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0.5, -5.5)
+
+[node name="Triggerable_Door_02" parent="." instance=ExtResource("5_q4hhf")]
+transform = Transform3D(-4.37722e-08, 1.86446e-10, -1, 0, 1, -8.18545e-12, 1, 4.65661e-10, -4.37722e-08, 0.0581989, 0.478778, 5.49982)
+
+[node name="Teleporter" parent="." instance=ExtResource("6_cslfq")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0.5, 0)

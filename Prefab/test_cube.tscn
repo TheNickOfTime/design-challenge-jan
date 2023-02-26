@@ -32,6 +32,7 @@ pixel_size = 0.0005
 billboard = 1
 double_sided = false
 fixed_size = true
+render_priority = 1
 text = "F
 "
 font_size = 64

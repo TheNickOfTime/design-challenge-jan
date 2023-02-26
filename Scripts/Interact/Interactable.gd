@@ -9,6 +9,7 @@ var interact_state : InteractState = InteractState.OFF
 @onready var interact_area : Area3D = $Interact_Radius
 @onready var activation_area : Area3D = $Proximity_Radius
 @onready var label : Label3D = $Label3D
+@onready var label_offset : Vector3 = label.position
 
 
 func _ready():
@@ -18,6 +19,12 @@ func _ready():
 	activation_area.body_exited.connect(_on_activation_radius_exit)
 
 	set_state(InteractState.OFF)
+	print(label_offset)
+
+
+func _process(delta):
+	# update_label_pos()
+	pass
 
 
 func _on_interact_radius_enter(body : Node3D):
@@ -73,3 +80,8 @@ func set_interact_enabled(is_enabled : bool):
 
 func is_player(body : Node3D) -> bool:
 	return body == (Controller.current_character as Node3D)
+
+
+func update_label_pos():
+	label.global_position = transform.origin + label_offset
+	# print(label.global_position)
