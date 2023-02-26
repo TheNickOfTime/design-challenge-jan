@@ -1,5 +1,8 @@
 extends Node3D
+class_name Teleporter
 
+
+signal teleported
 
 var is_active : bool
 var current_bodies : Array[Node3D]
@@ -51,5 +54,6 @@ func teleport_other_player(is_area_one : bool):
 	scale_up_tween.tween_property(character, "scale", Vector3.ONE, 0.25)
 
 	await scale_up_tween.finished
+	teleported.emit()
 	PhysicsSmoother.remove_exclude_node(self)
 	# Controller.can_move_character = true

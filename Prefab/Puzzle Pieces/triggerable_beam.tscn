@@ -10,10 +10,12 @@ emission = Color(1, 0, 0, 1)
 emission_energy_multiplier = 5.0
 
 [sub_resource type="BoxMesh" id="BoxMesh_v4uyk"]
+resource_local_to_scene = true
 material = SubResource("StandardMaterial3D_lxk3j")
 size = Vector3(0.1, 0.1, 0.1)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_5wxkn"]
+resource_local_to_scene = true
 size = Vector3(0.1, 0.1, 0.1)
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_h6k7t"]

@@ -3,9 +3,11 @@
 [ext_resource type="Script" path="res://Scripts/Puzzle Pieces/Triggerables/Triggerable_Door.gd" id="1_djhr6"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_7d1by"]
+resource_local_to_scene = true
 size = Vector3(0.25, 2.5, 3)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ur14t"]
+resource_local_to_scene = true
 size = Vector3(0.25, 2.5, 3)
 
 [sub_resource type="Animation" id="Animation_rc41e"]

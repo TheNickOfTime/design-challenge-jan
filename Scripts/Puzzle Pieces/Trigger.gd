@@ -7,6 +7,7 @@ signal trigger_deactivated
 enum TriggerMethod {BODY, AREA}
 
 # @export var triggerables : Array[Triggerable]
+@export var is_inverted : bool
 @export var triggerable : Triggerable
 @export var power_line : Node3D
 
@@ -26,6 +27,7 @@ func _ready():
 	if triggerable != null:
 		trigger_activated.connect(triggerable._on_trigger_activated)
 		trigger_deactivated.connect(triggerable._on_trigger_deactivated)
+		triggerable.is_inverted = is_inverted
 
 	if get_child_count() > 0:
 		for child in get_children():

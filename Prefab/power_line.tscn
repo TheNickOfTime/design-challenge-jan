@@ -1,9 +1,18 @@
-[gd_scene load_steps=3 format=3 uid="uid://m7n8akyxrtna"]
+[gd_scene load_steps=4 format=3 uid="uid://m7n8akyxrtna"]
 
 [ext_resource type="Script" path="res://Scripts/Power_Line.gd" id="1_gyjqv"]
 [ext_resource type="PackedScene" uid="uid://2g3v4prx7m7h" path="res://Prefab/power_line_decal.tscn" id="2_owvgd"]
 
+[sub_resource type="Curve3D" id="Curve3D_vsqpy"]
+resource_local_to_scene = true
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1),
+"tilts": PackedFloat32Array(0, 0)
+}
+point_count = 2
+
 [node name="Power_Line" type="Path3D"]
+curve = SubResource("Curve3D_vsqpy")
 script = ExtResource("1_gyjqv")
 decal = ExtResource("2_owvgd")
 activated_color = Color(0, 1, 0, 1)

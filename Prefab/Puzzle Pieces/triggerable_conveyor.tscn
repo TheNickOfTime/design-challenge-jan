@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3]
+[gd_scene load_steps=7 format=3 uid="uid://b8y83whuvt46e"]
 
 [ext_resource type="Script" path="res://Scripts/Puzzle Pieces/Triggerables/Triggerable_Conveyor.gd" id="1_rcysj"]
 [ext_resource type="Texture2D" uid="uid://hh3v0h7fiffv" path="res://Sprites/512x256_Rectangle.png" id="2_m7n06"]
@@ -52,7 +52,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, 2.08165e-12, -6)
 
 [node name="Decal" type="Decal" parent="Path3D/Conveyor_Section_01"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.5)
-size = Vector3(2, 2, 0.9)
+size = Vector3(2, 0.2, 0.9)
 texture_albedo = ExtResource("2_m7n06")
 modulate = Color(0.15, 0.15, 0.15, 1)
 cull_mask = 2

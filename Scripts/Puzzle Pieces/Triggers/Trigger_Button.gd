@@ -16,7 +16,10 @@ func trigger_entered(node : Node3D):
 
 	await button_anim.animation_finished
 
-	trigger_activated.emit()
+	if !is_inverted:
+		trigger_activated.emit()
+	else:
+		trigger_deactivated.emit()
 
 func trigger_exited(node : Node3D):
 	button_anim.play_backwards("button_down")
@@ -26,4 +29,7 @@ func trigger_exited(node : Node3D):
 
 	# await button_anim.animation_finished
 
-	trigger_deactivated.emit()
+	if !is_inverted:
+		trigger_deactivated.emit()
+	else:
+		trigger_activated.emit()
