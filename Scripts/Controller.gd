@@ -35,6 +35,8 @@ func _enter_tree():
 
 
 func _ready():
+	# await LevelLoader.level_loaded
+
 	# characters = get_tree().get_nodes_in_group("Character")
 	camera = get_tree().get_first_node_in_group("Camera")
 	camera_directions.resize(2)
@@ -106,6 +108,8 @@ func switch_character():
 	if !can_switch_character: return
 
 	current_character.rotate_direction = Vector2.ZERO
+	current_character.move_direction = Vector2.ZERO
+	current_character.velocity = Vector3.ZERO
 
 	# save previous values
 	camera_directions[character_index] = camera.transform

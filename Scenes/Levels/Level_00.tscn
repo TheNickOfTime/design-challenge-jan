@@ -1,12 +1,3 @@
-[gd_scene load_steps=3 format=3 uid="uid://2dvrp25ygeig"]
-
-[ext_resource type="PackedScene" uid="uid://d4dcowqbdcng0" path="res://Scenes/Levels/Level_01.tscn" id="1_kb0e1"]
-[ext_resource type="PackedScene" uid="uid://bag2rnpnpx7ap" path="res://Scenes/loading_room.tscn" id="3_v0qai"]
+[gd_scene format=3 uid="uid://2dvrp25ygeig"]
 
 [node name="Level_00" type="Node3D"]
-
-[node name="Level_01" parent="." instance=ExtResource("1_kb0e1")]
-
-[node name="Loading_Room" parent="." instance=ExtResource("3_v0qai")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 42.5)
-level_to_load = "res://Scenes/Levels/Level_02.tscn"

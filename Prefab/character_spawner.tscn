@@ -1,10 +1,29 @@
-[gd_scene load_steps=3 format=3 uid="uid://dy7whviu0icce"]
+[gd_scene load_steps=5 format=3 uid="uid://dy7whviu0icce"]
 
 [ext_resource type="Script" path="res://Scripts/Character_Spawner.gd" id="1_du0wk"]
 [ext_resource type="PackedScene" uid="uid://camjrakssyc5r" path="res://Prefab/decoy_body.tscn" id="2_tfqau"]
 
+[sub_resource type="CylinderMesh" id="CylinderMesh_w3e7a"]
+top_radius = 0.025
+bottom_radius = 0.025
+height = 0.25
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_jtj2a"]
+top_radius = 0.0
+bottom_radius = 0.05
+height = 0.1
+
 [node name="Character_Spawner" type="Node3D"]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 15, 0, 0)
 script = ExtResource("1_du0wk")
 
 [node name="Decoy_Character" parent="." instance=ExtResource("2_tfqau")]
+
+[node name="Forward" type="MeshInstance3D" parent="Decoy_Character"]
+transform = Transform3D(1, 0, 0, 0, 1.31134e-07, 1, 0, -1, 1.31134e-07, 0, 1.5, -0.6)
+mesh = SubResource("CylinderMesh_w3e7a")
+skeleton = NodePath("../..")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Decoy_Character/Forward"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.164255, 0)
+mesh = SubResource("CylinderMesh_jtj2a")
+skeleton = NodePath("../../..")

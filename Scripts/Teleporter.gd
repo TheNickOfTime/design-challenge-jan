@@ -48,12 +48,22 @@ func teleport_other_player(is_area_one : bool):
 
 	await scale_down_tween.finished
 	character.position = new_transform.origin
-	character.rotation = new_transform.basis.get_euler()
+	character.transform.basis.z = -new_transform.basis.z
+
+	for player in Controller.characters:
+		if player.is_skill_on:
+			player.primary_skill()
+		if player is PlayerCharacter_Shift:
+			if player.carried_item != null:
+				player.carried_item.queue_free()
+	
+	await get_tree().create_timer(0.1).timeout
 
 	var scale_up_tween = get_tree().create_tween()
 	scale_up_tween.tween_property(character, "scale", Vector3.ONE, 0.25)
 
+	PhysicsSmoother.remove_exclude_node(character)
+
 	await scale_up_tween.finished
 	teleported.emit()
-	PhysicsSmoother.remove_exclude_node(self)
 	# Controller.can_move_character = true
