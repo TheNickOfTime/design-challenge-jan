@@ -21,6 +21,7 @@ Controller="*res://Scripts/Controller.gd"
 PhysicsSmoother="*res://Addons/Smoother/smoother.gd"
 LevelLoader="*res://Scripts/Level_Loader.gd"
 Camera="*res://Prefab/camera.tscn"
+Persistent="*res://Scenes/persistent.tscn"
 
 [debug]
 

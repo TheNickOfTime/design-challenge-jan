@@ -54,6 +54,8 @@ func update_decal_colors(is_activated : bool, time : float):
 	for item in decals:
 		if trigger_count != initial_trigger_count:
 			break
+		if get_tree() == null:
+			break
 		item.modulate = color
 		await get_tree().create_timer(time_per).timeout
 	
