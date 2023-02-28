@@ -64,7 +64,7 @@ _data = {
 }
 point_count = 2
 
-[sub_resource type="Curve3D" id="Curve3D_7u85r"]
+[sub_resource type="Curve3D" id="Curve3D_ingim"]
 resource_local_to_scene = true
 _data = {
 "points": PackedVector3Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, -3, 0, 0, 0, 0, 0, 0, 1.5, 0, -3, 0, 0, 0, 0, 0, 0, 1.5, -3, -3, 0, 0, 0, 0, 0, 0, 7, -3, -3, 0, 0, 0, 0, 0, 0, 7, -3, 0.25, 0, 0, 0, 0, 0, 0, 9.5, -3, 0.25, 0, 0, 0, 0, 0, 0, 9.5, -3, 0, 0, 0, 0, 0, 0, 0, 10, -3, 0, 0, 0, 0, 0, 0, 0, 10, 0.5, 0),
@@ -422,7 +422,7 @@ power_line = NodePath("../Power_Line7")
 
 [node name="Power_Line7" parent="." instance=ExtResource("5_ugh6a")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.5, 3, 0)
-curve = SubResource("Curve3D_7u85r")
+curve = SubResource("Curve3D_ingim")
 
 [node name="Character_Spawner" parent="." instance=ExtResource("13_ik3sx")]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -4, 0, -15)

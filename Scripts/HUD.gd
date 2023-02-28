@@ -11,6 +11,8 @@ class_name HUD
 @onready var switch_prompt_button : Button = $SwitchPrompt/Button
 @onready var switch_prompt_label : Label = $SwitchPrompt/Label
 
+@onready var interact_prompt : Control = $InteractPrompt
+
 
 func _ready():
 	Controller.hud = self
@@ -39,8 +41,11 @@ func _on_controller_character_switch(character : PlayerCharacter):
 	if character is PlayerCharacter_Shift:
 		set_input_labels("Stretch", "Squash")
 		set_input_enabled(true, true)
+		interact_prompt.visible = true
 	elif character is PlayerCharacter_Divide:
 		set_input_labels("Divide", "Command")
+		interact_prompt.visible = false
+
 
 
 func _on_character_character_split(character : PlayerCharacter):
