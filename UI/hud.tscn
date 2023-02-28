@@ -4,7 +4,7 @@
 [ext_resource type="Theme" uid="uid://cfvidq6ofhr51" path="res://UI/Themes/theme_hud_button.tres" id="3_dkvn7"]
 
 [sub_resource type="InputEventAction" id="InputEventAction_23gen"]
-action = &"skill_secondary"
+action = &"character_interact"
 pressed = true
 
 [sub_resource type="Shortcut" id="Shortcut_v0kjd"]
@@ -118,3 +118,32 @@ text = "Tab"
 layout_mode = 2
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 text = "Switch Character"
+
+[node name="InteractPrompt" type="HBoxContainer" parent="."]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -143.0
+offset_top = -75.0
+offset_right = -25.0
+offset_bottom = -25.0
+grow_horizontal = 0
+grow_vertical = 0
+size_flags_horizontal = 3
+theme = ExtResource("3_dkvn7")
+theme_override_constants/separation = 12
+alignment = 2
+
+[node name="Interact" type="Label" parent="InteractPrompt"]
+layout_mode = 2
+text = "Interact"
+
+[node name="Button" type="Button" parent="InteractPrompt"]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+mouse_filter = 2
+button_mask = 0
+shortcut = SubResource("Shortcut_v0kjd")
+text = "F"

@@ -15,8 +15,8 @@ rings = 1
 cap_top = false
 cap_bottom = false
 
-[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_ksn3j"]
-points = PackedVector3Array(-0.5, -2.5, 0, -0.46202, -2.5, -0.191366, -0.46202, -2.5, 0.191269, -0.5, 2.5, 0, -0.353563, -2.5, -0.353563, -0.46202, 2.5, -0.191366, -0.353563, -2.5, 0.353465, -0.46202, 2.5, 0.191269, -0.191366, -2.5, -0.46202, -0.353563, 2.5, -0.353563, -0.191366, -2.5, 0.461922, -0.353563, 2.5, 0.353465, 0, -2.5, -0.5, -0.191366, 2.5, -0.46202, 0, -2.5, 0.5, -0.191366, 2.5, 0.461922, 0.191269, -2.5, -0.46202, 0, 2.5, -0.5, 0.191269, -2.5, 0.461922, 0, 2.5, 0.5, 0.353465, -2.5, -0.353563, 0.191269, 2.5, -0.46202, 0.353465, -2.5, 0.353465, 0.191269, 2.5, 0.461922, 0.461922, -2.5, -0.191366, 0.353465, 2.5, -0.353563, 0.461922, -2.5, 0.191269, 0.353465, 2.5, 0.353465, 0.5, -2.5, 0, 0.461922, 2.5, -0.191366, 0.461922, 2.5, 0.191269, 0.5, 2.5, 0)
+[sub_resource type="BoxShape3D" id="BoxShape3D_owcid"]
+size = Vector3(4, 5, 4)
 
 [node name="Triggerable_Platform" type="Node3D" node_paths=PackedStringArray("platform")]
 script = ExtResource("1_m1c5c")
@@ -46,4 +46,4 @@ mesh = SubResource("CylinderMesh_mlvov")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody_Platform/StaticBody_Piston"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.5, 0)
-shape = SubResource("ConvexPolygonShape3D_ksn3j")
+shape = SubResource("BoxShape3D_owcid")

@@ -9,4 +9,4 @@ size = Vector3(0.3, 0.3, 0.3)
 texture_albedo = ExtResource("1_2jv51")
 texture_emission = ExtResource("2_xti8w")
 emission_energy = 5.0
-cull_mask = 1048573
+cull_mask = 1048569
